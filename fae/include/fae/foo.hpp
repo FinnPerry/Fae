@@ -1,0 +1,4 @@
+namespace fae
+{
+void foo();
+}

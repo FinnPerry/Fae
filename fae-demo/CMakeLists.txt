@@ -1,0 +1,4 @@
+file(GLOB FAE_DEMO_SRC ./src/*.cpp)
+add_executable(fae-demo ${FAE_DEMO_SRC})
+target_include_directories(fae-demo PRIVATE ../fae/include/)
+target_link_libraries(fae-demo PRIVATE fae)

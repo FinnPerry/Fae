@@ -1,6 +1,9 @@
 #include <iostream>
 
-int main()
+namespace fae
+{
+void foo()
 {
     std::cout << "hi\n";
+}
 }
