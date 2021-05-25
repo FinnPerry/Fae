@@ -1,6 +1,6 @@
 #include <string>
 
-#include <GLFW/glfw3.h>
+struct GLFWwindow;
 
 namespace fae
 {
@@ -14,14 +14,20 @@ public:
 
     ~window();
 
+    static void poll_events();
+
     void open(std::string title, int width, int height);
 
     void close();
 
     bool is_open();
 
+    bool should_close();
+
 private:
-    void * window_;
+    static int count_;
+
+    GLFWwindow * window_;
     std::string title_;
 };
 

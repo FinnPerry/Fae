@@ -1,9 +1,11 @@
 #include "window.hpp"
 
-#include <iostream>
+#include <GLFW/glfw3.h>
 
 namespace fae
 {
+
+int window::count_{0};
 
 window::window():
     window_{nullptr},
@@ -22,11 +24,26 @@ window::~window()
     close();
 }
 
+void window::poll_events()
+{
+    if (count_ == 0)
+    {
+        return;
+    }
+
+    glfwPollEvents();
+}
+
 void window::open(std::string title, int width, int height)
 {
+    ++count_;
+    if (count_ == 1)
+    {
+        glfwInit();
+    }
+
     title_ = std::move(title);
     window_ = glfwCreateWindow(width, height, title_.c_str(), nullptr, nullptr);
-    std::cout << "open\n";
 }
 
 void window::close()
@@ -38,12 +55,27 @@ void window::close()
 
     window_ = nullptr;
     title_ = "";
-    std::cout << "close\n";
+
+    --count_;
+    if (count_ == 0)
+    {
+        glfwTerminate();
+    }
 }
 
 bool window::is_open()
 {
     return window_ != nullptr;
+}
+
+bool window::should_close()
+{
+    if (!is_open())
+    {
+        return false;
+    }
+
+    return glfwWindowShouldClose(window_);
 }
 
 }
