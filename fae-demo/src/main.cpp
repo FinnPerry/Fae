@@ -1,8 +1,12 @@
-#include <iostream>
+#include <chrono>
+#include <thread>
 
-#include <fae/foo.hpp>
+#include <fae/window.hpp>
+
+using namespace std::chrono_literals;
 
 int main()
 {
-    fae::foo();
+    fae::window window{"Test Window", 1280, 720};
+    std::this_thread::sleep_for(2s);
 }

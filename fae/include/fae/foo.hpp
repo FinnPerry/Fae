@@ -1,4 +1,0 @@
-namespace fae
-{
-void foo();
-}
