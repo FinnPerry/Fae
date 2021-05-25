@@ -1,5 +1,7 @@
 project(fae)
 cmake_minimum_required(VERSION 3.16.3)
 
+add_subdirectory(external/glfw)
+
 add_subdirectory(fae)
 add_subdirectory(fae-demo)
