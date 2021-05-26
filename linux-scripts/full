@@ -1,5 +1,4 @@
 ./clean
 ./configure
 ./build
-read -p "press enter to run..."
 ./run
