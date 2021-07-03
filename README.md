@@ -3,8 +3,8 @@
 ## Build instructions:
 
 - Install dependencies:
-    - Cmake https://cmake.org/
-    - glfw3 https://github.com/glfw/glfw.git
+    - `sudo apt install -y cmake build-essential g++`
+    - Build and install glfw3 from https://github.com/glfw/glfw.git
 - Build fae:
     - Navigate to the fae/scripts/ folder
     - Run build scripts:
