@@ -24,6 +24,12 @@ public:
 
     bool should_close();
 
+    void bind();
+
+    void update();
+
+    void clear();
+
 private:
     static int count_;
 

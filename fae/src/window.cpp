@@ -1,6 +1,9 @@
 #include "window.hpp"
 
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include <iostream>
 
 namespace fae
 {
@@ -44,6 +47,8 @@ void window::open(std::string title, int width, int height)
 
     title_ = std::move(title);
     window_ = glfwCreateWindow(width, height, title_.c_str(), nullptr, nullptr);
+
+    glfwMakeContextCurrent(window_);
 }
 
 void window::close()
@@ -76,6 +81,30 @@ bool window::should_close()
     }
 
     return glfwWindowShouldClose(window_);
+}
+
+void window::bind()
+{
+    if (is_open())
+    {
+        gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
+    }
+}
+
+void window::update()
+{
+    if (is_open())
+    {
+        glfwSwapBuffers(window_);
+    }
+}
+
+void window::clear()
+{
+    if (is_open())
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
 }
 
 }
