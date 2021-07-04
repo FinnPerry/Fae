@@ -53,6 +53,8 @@ void window::close()
         return;
     }
 
+    glfwDestroyWindow(window_);
+
     window_ = nullptr;
     title_ = "";
 
