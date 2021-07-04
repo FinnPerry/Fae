@@ -4,9 +4,9 @@
 int main()
 {
     fae::logger log{"log.txt"};
-    log << "start\n";
+    log.log("start");
     fae::window win{"Test Window", 1280, 720};
-    log << "created window " << 1280 << "*" << 720 << '\n';
+    log.log("created window");
     win.bind();
     while (!win.should_close())
     {
@@ -14,5 +14,5 @@ int main()
         win.clear();
         win.update();
     }
-    log << "end\n";
+    log.log("end");
 }

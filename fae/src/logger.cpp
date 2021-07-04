@@ -6,6 +6,7 @@ namespace fae
 {
 
 logger::logger(std::string const & path):
+    start_{std::chrono::high_resolution_clock::now()},
     file_{path, std::ios::out | std::ios::trunc}
 {
 }
@@ -19,39 +20,21 @@ logger::~logger()
     }
 }
 
-logger & logger::operator <<(char const * right)
+double logger::get_elapsed()
 {
-    std::cout << right;
+    auto now{std::chrono::high_resolution_clock::now()};
+    std::chrono::duration<double> dur{now - start_};
+    return dur.count();
+}
+
+void logger::log(char const * str)
+{
+    double timestamp{get_elapsed()};
+    std::cout << '[' << timestamp << "] " << str << '\n';
     if (file_.is_open())
     {
-        file_ << right;
+        file_ << '[' << timestamp << "] " << str << '\n';
     }
-    return *this;
-}
-
-logger & logger::operator <<(std::string const & right)
-{
-    return *this << right.c_str();
-}
-
-logger & logger::operator <<(char right)
-{
-    std::cout << right;
-    if (file_.is_open())
-    {
-        file_ << right;
-    }
-    return *this;
-}
-
-logger & logger::operator <<(int right)
-{
-    return *this << std::to_string(right).c_str();
-}
-
-logger & logger::operator <<(float right)
-{
-    return *this << std::to_string(right).c_str();
 }
 
 }

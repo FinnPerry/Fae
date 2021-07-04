@@ -1,5 +1,6 @@
-#include <string>
+#include <chrono>
 #include <fstream>
+#include <string>
 
 namespace fae
 {
@@ -11,17 +12,12 @@ public:
 
     ~logger();
 
-    logger & operator <<(char const * right);
-
-    logger & operator <<(std::string const & right);
-
-    logger & operator <<(char right);
-
-    logger & operator <<(int right);
-
-    logger & operator <<(float right);
+    void log(char const * str);
 
 private:
+    double get_elapsed();
+
+    std::chrono::high_resolution_clock::time_point start_;
     std::ofstream file_;
 };
 
