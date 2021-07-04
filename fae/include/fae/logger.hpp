@@ -1,3 +1,6 @@
+#ifndef FAE_LOGGER_GUARD
+#define FAE_LOGGER_GUARD
+
 #include <chrono>
 #include <fstream>
 #include <string>
@@ -24,3 +27,5 @@ private:
 };
 
 }
+
+#endif
