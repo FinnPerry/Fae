@@ -1,3 +1,6 @@
+#ifndef FAE_WINDOW_GUARD
+#define FAE_WINDOW_GUARD
+
 #include <string>
 
 struct GLFWwindow;
@@ -38,3 +41,5 @@ private:
 };
 
 }
+
+#endif

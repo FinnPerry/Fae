@@ -1,9 +1,12 @@
 #include "window.hpp"
 
+#include "logger.hpp"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <sstream>
 
 namespace fae
 {
@@ -43,10 +46,17 @@ void window::open(std::string title, int width, int height)
     if (count_ == 1)
     {
         glfwInit();
+
+        logger::instance().log("Init glfw");
     }
 
     title_ = std::move(title);
     window_ = glfwCreateWindow(width, height, title_.c_str(), nullptr, nullptr);
+
+    std::stringstream ss{};
+    ss << "Opened window ";
+    ss << reinterpret_cast<void *>(window_);
+    logger::instance().log(ss.str().c_str());
 
     glfwMakeContextCurrent(window_);
 }
@@ -58,6 +68,13 @@ void window::close()
         return;
     }
 
+    glfwDestroyWindow(window_);
+
+    std::stringstream ss{};
+    ss << "Closed window ";
+    ss << reinterpret_cast<void *>(window_);
+    logger::instance().log(ss.str().c_str());
+
     window_ = nullptr;
     title_ = "";
 
@@ -65,6 +82,8 @@ void window::close()
     if (count_ == 0)
     {
         glfwTerminate();
+
+        logger::instance().log("Terminated glfw");
     }
 }
 
