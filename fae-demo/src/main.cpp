@@ -1,4 +1,5 @@
 #include <fae/window.hpp>
+#include <fae/logger.hpp>
 
 int main()
 {
