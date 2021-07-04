@@ -37,4 +37,10 @@ void logger::log(char const * str)
     }
 }
 
+logger & logger::instance()
+{
+    static logger log{"log.txt"};
+    return log;
+}
+
 }

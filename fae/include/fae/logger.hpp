@@ -14,6 +14,8 @@ public:
 
     void log(char const * str);
 
+    static logger & instance();
+
 private:
     double get_elapsed();
 
