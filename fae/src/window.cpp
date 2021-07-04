@@ -67,13 +67,13 @@ void window::close()
 
     glfwDestroyWindow(window_);
 
-    window_ = nullptr;
-    title_ = "";
-
     std::stringstream ss{};
     ss << "Closed window ";
     ss << reinterpret_cast<void *>(window_);
     logger::instance().log(ss.str().c_str());
+
+    window_ = nullptr;
+    title_ = "";
 
     --count_;
     if (count_ == 0)
