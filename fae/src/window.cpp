@@ -46,10 +46,13 @@ void window::open(std::string title, int width, int height)
     if (count_ == 1)
     {
         glfwInit();
+
+        logger::instance().log("Init glfw");
     }
 
     title_ = std::move(title);
     window_ = glfwCreateWindow(width, height, title_.c_str(), nullptr, nullptr);
+
     std::stringstream ss{};
     ss << "Opened window ";
     ss << reinterpret_cast<void *>(window_);
@@ -79,6 +82,8 @@ void window::close()
     if (count_ == 0)
     {
         glfwTerminate();
+
+        logger::instance().log("Terminated glfw");
     }
 }
 
