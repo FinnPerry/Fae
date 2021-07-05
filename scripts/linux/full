@@ -1,4 +1,4 @@
-./clean
-./configure
-./build
-./run
+bash clean
+bash configure
+bash build
+bash run

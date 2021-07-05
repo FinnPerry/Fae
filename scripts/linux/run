@@ -1,2 +1,2 @@
-cd ../build/fae-demo/
+cd ../../build/fae-demo/
 ./fae-demo
