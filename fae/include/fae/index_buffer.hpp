@@ -1,5 +1,5 @@
-#ifndef FAE_INDEX_BUFFER_HPP
-#define FAE_INDEX_BUFFER_HPP
+#ifndef FAE_INDEX_BUFFER_GUARD
+#define FAE_INDEX_BUFFER_GUARD
 
 namespace fae
 {
