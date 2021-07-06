@@ -20,8 +20,6 @@ public:
 
     void bind();
 
-    std::string window_ptr_str();
-
     void update_screen();
 
     void clear();
