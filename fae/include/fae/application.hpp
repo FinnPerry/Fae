@@ -18,6 +18,12 @@ public:
 
     void run(int width, int height, std::string title);
 
+    virtual void load() {}
+
+    virtual void unload() {}
+
+    virtual void update() {}
+
 private:
     std::unique_ptr<window> window_;
 };

@@ -23,13 +23,20 @@ void application::run(int width, int height, std::string title)
     window_ = std::make_unique<window>(width, height, std::move(title));
     window_->bind();
 
+    load();
+
     while (!window_->should_close())
     {
         glfwPollEvents();
 
         window_->clear();
+
+        update();
+
         window_->update_screen();
     }
+
+    unload();
 
     window_.reset();
 }
