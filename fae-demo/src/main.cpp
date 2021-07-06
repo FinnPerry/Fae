@@ -1,14 +1,23 @@
-#include <fae/window.hpp>
+#include <fae/application.hpp>
 #include <fae/logger.hpp>
+
+class test_app : public fae::application
+{
+public:
+    test_app():
+        fae::application()
+    {
+    }
+
+    virtual ~test_app() = default;
+};
 
 int main()
 {
-    fae::window win{"Test Window", 1280, 720};
-    win.bind();
-    while (!win.should_close())
-    {
-        fae::window::poll_events();
-        win.clear();
-        win.update();
-    }
+    fae::logger::instance().log("start");
+
+    test_app app{};
+    app.run(1280, 720, "test app");
+
+    fae::logger::instance().log("end");
 }

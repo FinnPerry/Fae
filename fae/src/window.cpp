@@ -11,119 +11,47 @@
 namespace fae
 {
 
-int window::count_{0};
-
-window::window():
-    window_{nullptr},
-    title_{""}
+window::window(int width, int height, std::string title):
+    window_{nullptr, glfwDestroyWindow}
 {
-}
-
-window::window(std::string title, int width, int height):
-    window()
-{
-    open(title, width, height);
+    title_ = std::move(title);
+    window_.reset(glfwCreateWindow(width, height, title_.c_str(), nullptr, nullptr));
+    logger::instance().log(("Created window " + window_ptr_str() + '.').c_str());
 }
 
 window::~window()
 {
-    close();
-}
-
-void window::poll_events()
-{
-    if (count_ == 0)
-    {
-        return;
-    }
-
-    glfwPollEvents();
-}
-
-void window::open(std::string title, int width, int height)
-{
-    ++count_;
-    if (count_ == 1)
-    {
-        glfwInit();
-
-        logger::instance().log("Init glfw");
-    }
-
-    title_ = std::move(title);
-    window_ = glfwCreateWindow(width, height, title_.c_str(), nullptr, nullptr);
-
-    std::stringstream ss{};
-    ss << "Opened window ";
-    ss << reinterpret_cast<void *>(window_);
-    logger::instance().log(ss.str().c_str());
-
-    glfwMakeContextCurrent(window_);
-}
-
-void window::close()
-{
-    if (!is_open())
-    {
-        return;
-    }
-
-    glfwDestroyWindow(window_);
-
-    std::stringstream ss{};
-    ss << "Closed window ";
-    ss << reinterpret_cast<void *>(window_);
-    logger::instance().log(ss.str().c_str());
-
-    window_ = nullptr;
-    title_ = "";
-
-    --count_;
-    if (count_ == 0)
-    {
-        glfwTerminate();
-
-        logger::instance().log("Terminated glfw");
-    }
-}
-
-bool window::is_open()
-{
-    return window_ != nullptr;
+    logger::instance().log(("Destroyed window " + window_ptr_str() + '.').c_str());
 }
 
 bool window::should_close()
 {
-    if (!is_open())
-    {
-        return false;
-    }
+    return glfwWindowShouldClose(window_.get());
+}
 
-    return glfwWindowShouldClose(window_);
+std::string window::window_ptr_str()
+{
+    std::stringstream ss{};
+    ss << reinterpret_cast<void *>(window_.get());
+    return ss.str();
 }
 
 void window::bind()
 {
-    if (is_open())
-    {
-        gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
-    }
+    glfwMakeContextCurrent(window_.get());
+    gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
+    logger::instance().log(("Initialized glad for window " + window_ptr_str() + '.').c_str());
 }
 
-void window::update()
+void window::update_screen()
 {
-    if (is_open())
-    {
-        glfwSwapBuffers(window_);
-    }
+    glfwSwapBuffers(window_.get());
 }
 
 void window::clear()
 {
-    if (is_open())
-    {
-        glClear(GL_COLOR_BUFFER_BIT);
-    }
+    // this should be moved to a renderer class
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 }
