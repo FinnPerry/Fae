@@ -28,9 +28,13 @@ void gl_error_callback(GLenum source, GLenum type, unsigned int id, GLenum sever
 namespace fae
 {
 
-renderer::renderer()
+renderer::renderer():
+    vao_{0}
 {
     glDebugMessageCallback(gl_error_callback, nullptr);
+
+    glGenVertexArrays(1, &vao_);
+    glBindVertexArray(vao_);
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -45,7 +49,7 @@ void renderer::draw_buffers(vertex_buffer const & verts, index_buffer const & tr
 {
     verts.bind();
     tris.bind();
-    glDrawArrays(GL_TRIANGLES, 0, tris.size() * 3);
+    glDrawElements(GL_TRIANGLES, 3 * tris.size(), GL_UNSIGNED_INT, nullptr);
 }
 
 }

@@ -62,8 +62,8 @@ public:
 
     virtual void update() override
     {
-        // shader->bind();
-        // renderer_->draw_buffers(*vertices.get(), *indices.get());
+        shader->bind();
+        renderer_->draw_buffers(*vertices.get(), *indices.get());
     }
 
 private:

@@ -6,7 +6,7 @@ namespace fae
 
 struct triangle
 {
-    int indices[3];
+    unsigned int indices[3];
 };
 
 class index_buffer

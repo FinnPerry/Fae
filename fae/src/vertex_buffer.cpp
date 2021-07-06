@@ -31,6 +31,7 @@ void vertex_buffer::bind() const
 {
     glBindBuffer(GL_ARRAY_BUFFER, id_);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, offsetof(vertex, position));
+    glEnableVertexAttribArray(0);
 }
 
 void vertex_buffer::set_data(int size, vertex const * data)

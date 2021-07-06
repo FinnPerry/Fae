@@ -17,6 +17,9 @@ public:
     void clear();
 
     void draw_buffers(vertex_buffer const & verts, index_buffer const & tris);
+
+private:
+    unsigned int vao_;
 };
 
 }
