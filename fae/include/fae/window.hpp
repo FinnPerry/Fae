@@ -22,8 +22,6 @@ public:
 
     void update_screen();
 
-    void clear();
-
 private:
     using win_ptr = std::unique_ptr<GLFWwindow, void(*)(GLFWwindow *)>;
 
