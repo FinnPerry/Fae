@@ -1,14 +1,44 @@
-#include <fae/window.hpp>
+#include <fae/application.hpp>
 #include <fae/logger.hpp>
+
+class test_app : public fae::application
+{
+public:
+    test_app():
+        fae::application()
+    {
+    }
+
+    virtual ~test_app() = default;
+
+    virtual void load() override
+    {
+        fae::logger::instance().log("load");
+
+        count = 0;
+    }
+
+    virtual void unload() override
+    {
+        fae::logger::instance().log("unload");
+    }
+
+    virtual void update() override
+    {
+        ++count;
+        if (count == 100)
+        {
+            count = 0;
+            fae::logger::instance().log("update");
+        }
+    }
+
+private:
+    int count;
+};
 
 int main()
 {
-    fae::window win{"Test Window", 1280, 720};
-    win.bind();
-    while (!win.should_close())
-    {
-        fae::window::poll_events();
-        win.clear();
-        win.update();
-    }
+    test_app app{};
+    app.run(1280, 720, "test app");
 }

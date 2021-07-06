@@ -2,6 +2,7 @@
 #define FAE_WINDOW_GUARD
 
 #include <string>
+#include <memory>
 
 struct GLFWwindow;
 
@@ -11,32 +12,22 @@ namespace fae
 class window
 {
 public:
-    window();
-
-    window(std::string title, int width, int height);
+    window(int width, int height, std::string title);
 
     ~window();
-
-    static void poll_events();
-
-    void open(std::string title, int width, int height);
-
-    void close();
-
-    bool is_open();
 
     bool should_close();
 
     void bind();
 
-    void update();
+    void update_screen();
 
     void clear();
 
 private:
-    static int count_;
+    using win_ptr = std::unique_ptr<GLFWwindow, void(*)(GLFWwindow *)>;
 
-    GLFWwindow * window_;
+    win_ptr window_;
     std::string title_;
 };
 
