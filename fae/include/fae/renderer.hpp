@@ -7,7 +7,7 @@ namespace fae
 class renderer
 {
 public:
-    renderer() = default;
+    renderer();
 
     ~renderer() = default;
 
