@@ -25,7 +25,7 @@ index_buffer::~index_buffer()
     glDeleteBuffers(1, &id_);
 }
 
-void index_buffer::bind()
+void index_buffer::bind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_);
 }

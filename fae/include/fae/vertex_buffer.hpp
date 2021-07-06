@@ -25,11 +25,13 @@ public:
 
     ~vertex_buffer();
 
-    void bind();
+    void bind() const;
 
     void set_data(int size, vertex const * data);
 
     void set_data_partial(int start, int size, vertex const * data);
+
+    inline int size() const { return size_; }
 
 private:
     unsigned int id_;

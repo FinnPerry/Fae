@@ -18,11 +18,13 @@ public:
 
     ~index_buffer();
 
-    void bind();
+    void bind() const;
 
     void set_data(int size, triangle const * data);
 
     void set_data_partial(int start, int size, triangle const * data);
+
+    inline int size() const { return size_; }
 
 private:
     unsigned int id_;

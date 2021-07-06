@@ -27,7 +27,7 @@ vertex_buffer::~vertex_buffer()
     glDeleteBuffers(1, &id_);
 }
 
-void vertex_buffer::bind()
+void vertex_buffer::bind() const
 {
     glBindBuffer(GL_ARRAY_BUFFER, id_);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, offsetof(vertex, position));
