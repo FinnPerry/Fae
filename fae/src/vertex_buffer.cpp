@@ -37,13 +37,13 @@ void vertex_buffer::set_data(int size, vertex const * data)
 {
     bind();
     size_ = size;
-    glBufferData(GL_ARRAY_BUFFER, size * sizeof(vertex), data, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, size_ * sizeof(vertex), data, GL_DYNAMIC_DRAW);
 }
 
 void vertex_buffer::set_data_partial(int start, int size, vertex const * data)
 {
     bind();
-    glBufferSubData(GL_ARRAY_BUFFER, start, size, data);
+    glBufferSubData(GL_ARRAY_BUFFER, start * sizeof(vertex), size * sizeof(vertex), data);
 }
 
 }
