@@ -33,9 +33,6 @@ renderer::renderer():
 {
     glDebugMessageCallback(gl_error_callback, nullptr);
 
-    glGenVertexArrays(1, &vao_);
-    glBindVertexArray(vao_);
-
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 }
@@ -45,11 +42,10 @@ void renderer::clear()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void renderer::draw_buffers(vertex_buffer const & verts, index_buffer const & tris)
+void renderer::draw_mesh(mesh const & m)
 {
-    verts.bind();
-    tris.bind();
-    glDrawElements(GL_TRIANGLES, 3 * tris.size(), GL_UNSIGNED_INT, nullptr);
+    m.bind();
+    glDrawElements(GL_TRIANGLES, 3 * m.get_ib_size(), GL_UNSIGNED_INT, nullptr);
 }
 
 }

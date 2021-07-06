@@ -1,10 +1,9 @@
 #include <memory>
 
 #include <fae/application.hpp>
-#include <fae/index_buffer.hpp>
 #include <fae/logger.hpp>
+#include <fae/mesh.hpp>
 #include <fae/shader.hpp>
-#include <fae/vertex_buffer.hpp>
 
 char const * vert_shader
 {
@@ -38,38 +37,36 @@ public:
     {
         shader = std::make_unique<fae::shader>(vert_shader, frag_shader);
 
+        mesh = std::make_unique<fae::mesh>();
         fae::vertex vert_data[3]
         {
             {0.0f, 0.5f},
             {0.5f, -0.5f},
             {-0.5f, -0.5f}
         };
-        vertices = std::make_unique<fae::vertex_buffer>(3, vert_data);
-
+        mesh->set_vertices(vert_data, 3);
         fae::triangle tri_data[1]
         {
             {0, 1, 2}
         };
-        indices = std::make_unique<fae::index_buffer>(1, tri_data);
+        mesh->set_triangles(tri_data, 1);
     }
 
     virtual void unload() override
     {
-        indices.reset();
-        vertices.reset();
+        mesh.reset();
         shader.reset();
     }
 
     virtual void update() override
     {
         shader->bind();
-        renderer_->draw_buffers(*vertices.get(), *indices.get());
+        renderer_->draw_mesh(*mesh.get());
     }
 
 private:
     std::unique_ptr<fae::shader> shader;
-    std::unique_ptr<fae::vertex_buffer> vertices;
-    std::unique_ptr<fae::index_buffer> indices;
+    std::unique_ptr<fae::mesh> mesh;
 };
 
 int main()

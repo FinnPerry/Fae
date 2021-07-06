@@ -1,8 +1,7 @@
 #ifndef FAE_RENDERER_GUARD
 #define FAE_RENDERER_GUARD
 
-#include "vertex_buffer.hpp"
-#include "index_buffer.hpp"
+#include "mesh.hpp"
 
 namespace fae
 {
@@ -16,7 +15,7 @@ public:
 
     void clear();
 
-    void draw_buffers(vertex_buffer const & verts, index_buffer const & tris);
+    void draw_mesh(mesh const & m);
 
 private:
     unsigned int vao_;

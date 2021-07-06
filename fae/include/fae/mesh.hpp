@@ -1,0 +1,53 @@
+#ifndef FAE_MESH_GUARD
+#define FAE_MESH_GUARD
+
+namespace fae
+{
+
+struct vector3
+{
+    float x;
+    float y;
+    float z;
+};
+
+struct vertex
+{
+    vector3 position;
+};
+
+struct triangle
+{
+    unsigned int indices[3];
+};
+
+class mesh
+{
+public:
+    mesh();
+
+    ~mesh();
+
+    void bind() const;
+
+    void set_vertices(vertex const * data, int size);
+
+    void set_triangles(triangle const * data, int size);
+
+    inline int get_vb_size() const { return vb_size_; }
+
+    inline int get_ib_size() const { return ib_size_; }
+
+private:
+    unsigned int vao_;
+
+    unsigned int vbo_;
+    int vb_size_;
+
+    unsigned int ibo_;
+    int ib_size_;
+};
+
+}
+
+#endif
