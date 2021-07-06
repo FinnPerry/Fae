@@ -7,6 +7,20 @@
 
 #include "logger.hpp"
 
+namespace
+{
+
+void glfw_error_callback(int error, char const * message)
+{
+    std::string str{"glfw error "};
+    str += std::to_string(error);
+    str += ": ";
+    str += message;
+    fae::logger::instance().log(str.c_str());
+}
+
+}
+
 namespace fae
 {
 
@@ -18,6 +32,7 @@ application::application():
 
 void application::run(int width, int height, std::string title)
 {
+    glfwSetErrorCallback(glfw_error_callback);
     glfwInit();
     logger::instance().log("Initialized glfw.");
     window_ = std::make_unique<window>(width, height, std::move(title));
