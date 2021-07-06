@@ -35,6 +35,7 @@ void window::bind()
     glfwMakeContextCurrent(window_.get());
     gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
     logger::instance().log(("Initialized glad for window \"" + title_ + "\".").c_str());
+    logger::instance().log(reinterpret_cast<char const *>(glGetString(GL_RENDERER)));
     logger::instance().log(reinterpret_cast<char const *>(glGetString(GL_VERSION)));
 }
 
