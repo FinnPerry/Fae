@@ -1,12 +1,37 @@
 #include "renderer.hpp"
 
+#include <string>
+
 #include <glad/glad.h>
+
+#include "logger.hpp"
+
+namespace
+{
+
+void gl_error_callback(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, char const * message, void const * user_arg)
+{
+    if (severity == GL_DEBUG_SEVERITY_NOTIFICATION)
+    {
+        return;
+    }
+
+    std::string str{"opengl error "};
+    str += std::to_string(id);
+    str += ": ";
+    str += message;
+    fae::logger::instance().log(str.c_str());
+}
+
+}
 
 namespace fae
 {
 
 renderer::renderer()
 {
+    glDebugMessageCallback(gl_error_callback, nullptr);
+
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 }

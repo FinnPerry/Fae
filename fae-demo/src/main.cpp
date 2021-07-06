@@ -18,7 +18,7 @@ char const * vert_shader
 char const * frag_shader
 {
     "#version 430\n"
-    "out vec3 color;\n"
+    "out vec4 color;\n"
     "void main() {\n"
     "   color = vec4(0.0f, 1.0f, 0.0f, 1.0f);\n"
     "}"
@@ -62,8 +62,8 @@ public:
 
     virtual void update() override
     {
-        shader->bind();
-        renderer_->draw_buffers(*vertices.get(), *indices.get());
+        // shader->bind();
+        // renderer_->draw_buffers(*vertices.get(), *indices.get());
     }
 
 private:
