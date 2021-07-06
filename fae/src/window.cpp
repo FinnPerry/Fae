@@ -15,6 +15,7 @@ window::window(int width, int height, std::string title):
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
     window_.reset(glfwCreateWindow(width, height, title_.c_str(), nullptr, nullptr));
     logger::instance().log(("Created window \"" + title_ + "\".").c_str());
@@ -35,18 +36,13 @@ void window::bind()
     glfwMakeContextCurrent(window_.get());
     gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
     logger::instance().log(("Initialized glad for window \"" + title_ + "\".").c_str());
+    logger::instance().log(reinterpret_cast<char const *>(glGetString(GL_RENDERER)));
     logger::instance().log(reinterpret_cast<char const *>(glGetString(GL_VERSION)));
 }
 
 void window::update_screen()
 {
     glfwSwapBuffers(window_.get());
-}
-
-void window::clear()
-{
-    // this should be moved to a renderer class
-    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 }
