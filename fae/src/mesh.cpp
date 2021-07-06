@@ -38,16 +38,30 @@ void mesh::bind() const
     glBindVertexArray(vao_);
 }
 
-void mesh::set_vertices(vertex const * data, int size)
+void mesh::set_verts(vertex const * data, int size)
 {
+    bind();
     vb_size_ = size;
     glBufferData(GL_ARRAY_BUFFER, vb_size_ * sizeof(vertex), data, GL_DYNAMIC_DRAW);
 }
 
-void mesh::set_triangles(triangle const * data, int size)
+void mesh::set_verts_partial(vertex const * data, int start, int size)
 {
+    bind();
+    glBufferSubData(GL_ARRAY_BUFFER, start * sizeof(vertex), size * sizeof(vertex), data);
+}
+
+void mesh::set_tris(triangle const * data, int size)
+{
+    bind();
     ib_size_ = size;
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, ib_size_ * sizeof(triangle), data, GL_DYNAMIC_DRAW);
+}
+
+void mesh::set_tris_partial(triangle const * data, int start, int size)
+{
+    bind();
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, start * sizeof(triangle), size * sizeof(triangle), data);
 }
 
 }

@@ -44,12 +44,12 @@ public:
             {0.5f, -0.5f},
             {-0.5f, -0.5f}
         };
-        mesh->set_vertices(vert_data, 3);
+        mesh->set_verts(vert_data, 3);
         fae::triangle tri_data[1]
         {
             {0, 1, 2}
         };
-        mesh->set_triangles(tri_data, 1);
+        mesh->set_tris(tri_data, 1);
     }
 
     virtual void unload() override

@@ -30,9 +30,13 @@ public:
 
     void bind() const;
 
-    void set_vertices(vertex const * data, int size);
+    void set_verts(vertex const * data, int size);
 
-    void set_triangles(triangle const * data, int size);
+    void set_verts_partial(vertex const * data, int start, int size);
+
+    void set_tris(triangle const * data, int size);
+
+    void set_tris_partial(triangle const * data, int start, int size);
 
     inline int get_vb_size() const { return vb_size_; }
 
