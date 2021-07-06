@@ -22,6 +22,11 @@ vertex_buffer::vertex_buffer(int size, vertex const * data):
     set_data(size_, data);
 }
 
+vertex_buffer::~vertex_buffer()
+{
+    glDeleteBuffers(1, &id_);
+}
+
 void vertex_buffer::bind()
 {
     glBindBuffer(GL_ARRAY_BUFFER, id_);
