@@ -38,10 +38,4 @@ void window::update_screen()
     glfwSwapBuffers(window_.get());
 }
 
-void window::clear()
-{
-    // this should be moved to a renderer class
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
 }

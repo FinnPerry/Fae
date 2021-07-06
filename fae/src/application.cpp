@@ -11,7 +11,8 @@ namespace fae
 {
 
 application::application():
-    window_{nullptr}
+    window_{nullptr},
+    renderer_{nullptr}
 {
 }
 
@@ -19,26 +20,24 @@ void application::run(int width, int height, std::string title)
 {
     glfwInit();
     logger::instance().log("Initialized glfw.");
-
     window_ = std::make_unique<window>(width, height, std::move(title));
     window_->bind();
+    renderer_ = std::make_unique<renderer>();
 
     load();
-
     while (!window_->should_close())
     {
         glfwPollEvents();
-
-        window_->clear();
-
+        renderer_->clear();
         update();
-
         window_->update_screen();
     }
-
     unload();
 
+    renderer_.reset();
     window_.reset();
+    glfwTerminate();
+    logger::instance().log("Terminated glfw.");
 }
 
 }

@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "window.hpp"
+#include "renderer.hpp"
 
 namespace fae
 {
@@ -24,8 +25,9 @@ public:
 
     virtual void update() {}
 
-private:
+protected:
     std::unique_ptr<window> window_;
+    std::unique_ptr<renderer> renderer_;
 };
 
 }
