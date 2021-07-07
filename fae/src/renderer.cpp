@@ -20,7 +20,7 @@ void gl_error_callback(GLenum source, GLenum type, unsigned int id, GLenum sever
     str += std::to_string(id);
     str += ": ";
     str += message;
-    fae::logger::instance().log(str.c_str());
+    fae::log(str.c_str());
 }
 
 }

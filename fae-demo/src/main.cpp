@@ -5,6 +5,9 @@
 #include <fae/mesh.hpp>
 #include <fae/shader.hpp>
 
+namespace
+{
+
 char const * vert_shader
 {
     "#version 430\n"
@@ -68,6 +71,8 @@ private:
     std::unique_ptr<fae::shader> shader;
     std::unique_ptr<fae::mesh> mesh;
 };
+
+}
 
 int main()
 {
