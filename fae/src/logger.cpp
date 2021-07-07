@@ -7,6 +7,25 @@
 namespace
 {
 
+char const * get_type_string(fae::log_type type)
+{
+    switch (type)
+    {
+        case fae::log_type::warning:
+        {
+            return "warning";
+        }
+        case fae::log_type::error:
+        {
+            return "error";
+        }
+        default:
+        {
+            return "message";
+        }
+    }
+}
+
 class logger
 {
 public:
@@ -25,11 +44,12 @@ public:
         }
     }
 
-    void log(char const * str)
+    void log(char const * str, fae::log_type type)
     {
         double timestamp{get_elapsed()};
         std::stringstream ss;
-        ss << '[' << timestamp << "]\t" << str << '\n';
+        ss << '[' << timestamp << ' ' << get_type_string(type) << ']';
+        ss << ' ' << str << '\n';
 
         std::cout << ss.str();
         if (file_.is_open())
@@ -57,9 +77,9 @@ logger instance{"log.txt"};
 namespace fae
 {
 
-void log(char const * str)
+void log(char const * str, log_type type)
 {
-    instance.log(str);
+    instance.log(str, type);
 }
 
 }
