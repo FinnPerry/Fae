@@ -1,4 +1,2 @@
 bash clean
 bash configure
-bash build
-bash run
