@@ -16,7 +16,7 @@ void glfw_error_callback(int error, char const * message)
     str += std::to_string(error);
     str += ": ";
     str += message;
-    fae::log(str);
+    fae::log(str, fae::log_type::error);
 }
 
 }

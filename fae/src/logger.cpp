@@ -26,6 +26,25 @@ char const * get_type_string(fae::log_type type)
     }
 }
 
+char const * get_color_code(fae::log_type type)
+{
+    switch (type)
+    {
+        case fae::log_type::warning:
+        {
+            return "\033[33m";
+        }
+        case fae::log_type::error:
+        {
+            return "\033[31m";
+        }
+        default:
+        {
+            return "\033[0m";
+        }
+    }
+}
+
 class logger
 {
 public:
@@ -46,15 +65,16 @@ public:
 
     void log(char const * str, fae::log_type type)
     {
-        double timestamp{get_elapsed()};
-        std::stringstream ss;
-        ss << '[' << timestamp << ' ' << get_type_string(type) << ']';
-        ss << ' ' << str << '\n';
+        double time{get_elapsed()};
 
-        std::cout << ss.str();
+        static auto normal{get_color_code(fae::log_type::message)};
+        auto color{get_color_code(type)};
+        std::cout << normal << '[' << time << "] " << color << str << '\n';
+
         if (file_.is_open())
         {
-            file_ << ss.str();
+            auto typestr{get_type_string(type)};
+            file_ << '[' << time << ' ' << typestr << "] " << str << '\n';
         }
     }
 
