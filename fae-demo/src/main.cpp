@@ -5,6 +5,9 @@
 #include <fae/mesh.hpp>
 #include <fae/shader.hpp>
 
+namespace
+{
+
 char const * vert_shader
 {
     "#version 430\n"
@@ -50,6 +53,10 @@ public:
             {0, 1, 2}
         };
         mesh->set_tris(tri_data, 1);
+
+        fae::log("test log message");
+        fae::log("test log warning", fae::log_type::warning);
+        fae::log("test log error", fae::log_type::error);
     }
 
     virtual void unload() override
@@ -68,6 +75,8 @@ private:
     std::unique_ptr<fae::shader> shader;
     std::unique_ptr<fae::mesh> mesh;
 };
+
+}
 
 int main()
 {

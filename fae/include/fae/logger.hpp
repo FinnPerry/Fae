@@ -1,30 +1,26 @@
 #ifndef FAE_LOGGER_GUARD
 #define FAE_LOGGER_GUARD
 
-#include <chrono>
-#include <fstream>
 #include <string>
+#include <sstream>
 
 namespace fae
 {
 
-class logger
+enum class log_type
 {
-public:
-    logger(std::string const & path);
-
-    ~logger();
-
-    void log(char const * str);
-
-    static logger & instance();
-
-private:
-    double get_elapsed();
-
-    std::chrono::high_resolution_clock::time_point start_;
-    std::ofstream file_;
+    message,
+    warning,
+    error
 };
+
+void log(char const * str, log_type type = log_type::message);
+
+inline void log(std::string const & str, log_type type = log_type::message)
+{ log(str.c_str(), type); }
+
+inline void log(std::stringstream const & str, log_type type = log_type::message)
+{ log(str.str(), type); }
 
 }
 
