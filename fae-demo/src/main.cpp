@@ -1,6 +1,7 @@
 #include <memory>
 
 #include <fae/application.hpp>
+#include <fae/event.hpp>
 #include <fae/logger.hpp>
 #include <fae/mesh.hpp>
 #include <fae/shader.hpp>
@@ -80,6 +81,10 @@ private:
 
 int main()
 {
+    fae::log("========== fae-demo start ==========");
+
     test_app app{};
     app.run(1280, 720, "fae demo");
+
+    fae::log("========== fae-demo end ==========");
 }
