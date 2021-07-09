@@ -11,16 +11,10 @@ namespace
 
 void gl_error_callback(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, char const * message, void const * user_arg)
 {
-    if (severity == GL_DEBUG_SEVERITY_NOTIFICATION)
+    if (severity != GL_DEBUG_SEVERITY_NOTIFICATION)
     {
-        return;
+        fae::log(fae::log_type::error, "OpenGL error", id, ':', message);
     }
-
-    std::string str{"opengl error "};
-    str += std::to_string(id);
-    str += ": ";
-    str += message;
-    // fae::log(str.c_str(), fae::log_type::error);
 }
 
 }

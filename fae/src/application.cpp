@@ -12,11 +12,7 @@ namespace
 
 void glfw_error_callback(int error, char const * message)
 {
-    std::string str{"glfw error "};
-    str += std::to_string(error);
-    str += ": ";
-    str += message;
-    // fae::log(str, fae::log_type::error);
+    fae::log(fae::log_type::error, "GLFW error", error, ':', message);
 }
 
 }
@@ -34,7 +30,7 @@ void application::run(int width, int height, std::string title)
 {
     glfwSetErrorCallback(glfw_error_callback);
     glfwInit();
-    // log("Initialized glfw.");
+    log("Initialized GLFW.");
     window_ = std::make_unique<window>(width, height, std::move(title));
     window_->bind();
     renderer_ = std::make_unique<renderer>();
@@ -52,7 +48,7 @@ void application::run(int width, int height, std::string title)
     renderer_.reset();
     window_.reset();
     glfwTerminate();
-    // log("Terminated glfw.");
+    log("Terminated GLFW.");
 }
 
 }
