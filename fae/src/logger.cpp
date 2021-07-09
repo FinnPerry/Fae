@@ -104,7 +104,8 @@ class log_data
 {
 public:
     log_data():
-        file{"fae-log.txt", std::ios::trunc | std::ios::out}
+        file{"fae-log.txt", std::ios::trunc | std::ios::out},
+        start{std::chrono::high_resolution_clock::now()}
     {
     }
 
@@ -118,6 +119,7 @@ public:
     }
 
     std::ofstream file;
+    std::chrono::high_resolution_clock::time_point start;
 };
 
 log_data instance;
@@ -131,9 +133,13 @@ void finish_log(log_type type, std::stringstream & ss)
 {
     auto str{ss.str()};
 
-    std::cout << '[' << "] " << ansi_color_code(type) << str << '\n';
+    auto now{std::chrono::high_resolution_clock::now()};
+    std::chrono::duration<double> dur{now - instance.start};
+    double elapsed{dur.count()};
+
+    std::cout << '[' << elapsed << "] " << ansi_color_code(type) << str << '\n';
     std::cout << ansi_color_code(log_type::message);
-    instance.file << '[' << log_type_str(type) << "] " << str << '\n';
+    instance.file << '[' << elapsed << ' ' << log_type_str(type) << "] " << str << '\n';
 }
 
 }
