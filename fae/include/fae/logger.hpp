@@ -1,26 +1,34 @@
 #ifndef FAE_LOGGER_GUARD
 #define FAE_LOGGER_GUARD
 
-#include <string>
+#include <iostream>
 #include <sstream>
 
 namespace fae
 {
 
-enum class log_type
+template<class type>
+void log_variadic(std::stringstream & ss, type arg)
 {
-    message,
-    warning,
-    error
-};
+    ss << arg;
+}
 
-void log(char const * str, log_type type = log_type::message);
+template<class type, class ... types>
+void log_variadic(std::stringstream & ss, type arg, types ... args)
+{
+    log_variadic(ss, arg);
+    ss << ' ';
+    log_variadic(ss, args...);
+}
 
-inline void log(std::string const & str, log_type type = log_type::message)
-{ log(str.c_str(), type); }
-
-inline void log(std::stringstream const & str, log_type type = log_type::message)
-{ log(str.str(), type); }
+template<class type, class ... types>
+void log(type arg, types ... args)
+{
+    std::stringstream ss;
+    log_variadic(ss, arg, args...);
+    ss << '\n';
+    std::cout << ss.str();
+}
 
 }
 

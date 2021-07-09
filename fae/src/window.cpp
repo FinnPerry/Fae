@@ -18,12 +18,12 @@ window::window(int width, int height, std::string title):
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
     window_.reset(glfwCreateWindow(width, height, title_.c_str(), nullptr, nullptr));
-    log(("Created window \"" + title_ + "\".").c_str());
+    // log(("Created window \"" + title_ + "\".").c_str());
 }
 
 window::~window()
 {
-    log(("Destroyed window \"" + title_ + "\".").c_str());
+    // log(("Destroyed window \"" + title_ + "\".").c_str());
 }
 
 bool window::should_close()
@@ -35,9 +35,9 @@ void window::bind()
 {
     glfwMakeContextCurrent(window_.get());
     gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
-    log(("Initialized glad for window \"" + title_ + "\".").c_str());
-    log(reinterpret_cast<char const *>(glGetString(GL_RENDERER)));
-    log(reinterpret_cast<char const *>(glGetString(GL_VERSION)));
+    // log(("Initialized glad for window \"" + title_ + "\".").c_str());
+    // log(reinterpret_cast<char const *>(glGetString(GL_RENDERER)));
+    // log(reinterpret_cast<char const *>(glGetString(GL_VERSION)));
 }
 
 void window::update_screen()

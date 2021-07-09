@@ -7,6 +7,7 @@
 namespace
 {
 
+#if false
 char const * get_type_string(fae::log_type type)
 {
     switch (type)
@@ -63,7 +64,7 @@ public:
         }
     }
 
-    void log(char const * str, fae::log_type type)
+    void log(char const * str)
     {
         double time{get_elapsed()};
 
@@ -91,15 +92,11 @@ private:
 };
 
 logger instance{"log.txt"};
+#endif
 
 }
 
 namespace fae
 {
-
-void log(char const * str, log_type type)
-{
-    instance.log(str, type);
-}
 
 }

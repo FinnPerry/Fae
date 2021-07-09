@@ -16,7 +16,7 @@ void glfw_error_callback(int error, char const * message)
     str += std::to_string(error);
     str += ": ";
     str += message;
-    fae::log(str, fae::log_type::error);
+    // fae::log(str, fae::log_type::error);
 }
 
 }
@@ -34,7 +34,7 @@ void application::run(int width, int height, std::string title)
 {
     glfwSetErrorCallback(glfw_error_callback);
     glfwInit();
-    log("Initialized glfw.");
+    // log("Initialized glfw.");
     window_ = std::make_unique<window>(width, height, std::move(title));
     window_->bind();
     renderer_ = std::make_unique<renderer>();
@@ -52,7 +52,7 @@ void application::run(int width, int height, std::string title)
     renderer_.reset();
     window_.reset();
     glfwTerminate();
-    log("Terminated glfw.");
+    // log("Terminated glfw.");
 }
 
 }

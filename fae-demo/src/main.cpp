@@ -55,8 +55,8 @@ public:
         mesh->set_tris(tri_data, 1);
 
         fae::log("test log message");
-        fae::log("test log warning", fae::log_type::warning);
-        fae::log("test log error", fae::log_type::error);
+        fae::log("test log warning");
+        fae::log("test log error");
     }
 
     virtual void unload() override
@@ -76,31 +76,10 @@ private:
     std::unique_ptr<fae::mesh> mesh;
 };
 
-void print_variadic(std::stringstream & ss, char const * str)
-{
-    ss << str;
-}
-
-void print_variadic(std::stringstream & ss, char const * str, char const * args...)
-{
-    print_variadic(ss, str);
-    ss << " ";
-    print_variadic(ss, args);
-}
-
-void print(char const * str, char const * args...)
-{
-    std::stringstream ss;
-    print_variadic(ss, str, args);
-    fae::log(ss);
-}
-
 }
 
 int main()
 {
-    print("hi", "there");
-
-    // test_app app{};
-    // app.run(1280, 720, "fae demo");
+    test_app app{};
+    app.run(1280, 720, "fae demo");
 }
