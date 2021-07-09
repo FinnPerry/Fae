@@ -55,9 +55,9 @@ public:
         };
         mesh->set_tris(tri_data, 1);
 
-        fae::log("test log message");
-        fae::log("test log warning", fae::log_type::warning);
-        fae::log("test log error", fae::log_type::error);
+        fae::log("test", "log", "message");
+        fae::log(fae::log_type::warning, "test", "log", "warning");
+        fae::log(fae::log_type::error, "test", "log", "error");
     }
 
     virtual void unload() override
