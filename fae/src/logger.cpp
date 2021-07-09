@@ -7,26 +7,7 @@
 namespace
 {
 
-char const * get_type_string(fae::log_type type)
-{
-    switch (type)
-    {
-        case fae::log_type::warning:
-        {
-            return "warning";
-        }
-        case fae::log_type::error:
-        {
-            return "error";
-        }
-        default:
-        {
-            return "message";
-        }
-    }
-}
-
-char const * get_color_code(fae::log_type type)
+char const * ansi_color_code(fae::log_type type)
 {
     switch (type)
     {
@@ -45,61 +26,65 @@ char const * get_color_code(fae::log_type type)
     }
 }
 
-class logger
+char const * log_type_str(fae::log_type type)
+{
+    switch (type)
+    {
+        case fae::log_type::warning:
+        {
+            return "warning";
+        }
+        case fae::log_type::error:
+        {
+            return "error";
+        }
+        default:
+        {
+            return "message";
+        }
+    }
+}
+
+class log_data
 {
 public:
-    logger(char const * path):
-        file_{path, std::ios::trunc | std::ios::out},
-        start_{std::chrono::high_resolution_clock::now()}
+    log_data():
+        file{"fae-log.txt", std::ios::trunc | std::ios::out},
+        start{std::chrono::high_resolution_clock::now()}
     {
     }
 
-    ~logger()
+    ~log_data()
     {
-        if (file_.is_open())
+        if (file.is_open())
         {
-            file_.flush();
-            file_.close();
+            file.flush();
+            file.close();
         }
     }
 
-    void log(char const * str, fae::log_type type)
-    {
-        double time{get_elapsed()};
-
-        static auto normal{get_color_code(fae::log_type::message)};
-        auto color{get_color_code(type)};
-        std::cout << normal << '[' << time << "] " << color << str << '\n';
-
-        if (file_.is_open())
-        {
-            auto typestr{get_type_string(type)};
-            file_ << '[' << time << ' ' << typestr << "] " << str << '\n';
-        }
-    }
-
-    double get_elapsed()
-    {
-        auto now{std::chrono::high_resolution_clock::now()};
-        std::chrono::duration<double> dur{now - start_};
-        return dur.count();
-    }
-
-private:
-    std::ofstream file_;
-    std::chrono::high_resolution_clock::time_point start_;
+    std::ofstream file;
+    std::chrono::high_resolution_clock::time_point start;
 };
 
-logger instance{"log.txt"};
+log_data instance;
 
 }
 
 namespace fae
 {
 
-void log(char const * str, log_type type)
+void finish_log(log_type type, std::stringstream & ss)
 {
-    instance.log(str, type);
+    auto str{ss.str()};
+
+    auto now{std::chrono::high_resolution_clock::now()};
+    std::chrono::duration<double> dur{now - instance.start};
+    double elapsed{dur.count()};
+
+    std::cout << '[' << elapsed << "] " << ansi_color_code(type) << str << '\n';
+    std::cout << ansi_color_code(log_type::message);
+    instance.file << '[' << elapsed << ' ' << log_type_str(type) << "] " << str << '\n';
 }
 
 }
