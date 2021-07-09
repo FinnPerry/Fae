@@ -76,10 +76,31 @@ private:
     std::unique_ptr<fae::mesh> mesh;
 };
 
+void print_variadic(std::stringstream & ss, char const * str)
+{
+    ss << str;
+}
+
+void print_variadic(std::stringstream & ss, char const * str, char const * args...)
+{
+    print_variadic(ss, str);
+    ss << " ";
+    print_variadic(ss, args);
+}
+
+void print(char const * str, char const * args...)
+{
+    std::stringstream ss;
+    print_variadic(ss, str, args);
+    fae::log(ss);
+}
+
 }
 
 int main()
 {
-    test_app app{};
-    app.run(1280, 720, "fae demo");
+    print("hi", "there");
+
+    // test_app app{};
+    // app.run(1280, 720, "fae demo");
 }
