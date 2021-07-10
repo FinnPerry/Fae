@@ -40,6 +40,11 @@ public:
         fae::log("test", "log", "message");
         fae::log(fae::log_type::warning, "test", "log", "warning");
         fae::log(fae::log_type::error, "test", "log", "error");
+
+        get_window()->on_resize.add_callback([](int width, int height)->void
+        {
+            fae::log("window resize", width, height);
+        });
     }
 
     virtual void unload() override
@@ -51,7 +56,7 @@ public:
     virtual void update() override
     {
         shader->bind();
-        renderer_->draw_mesh(*mesh.get());
+        get_renderer()->draw_mesh(*mesh.get());
     }
 
 private:
@@ -63,10 +68,10 @@ private:
 
 int main()
 {
-    fae::log("========== fae-demo start ==========");
+    fae::log("========== fae demo start ==========");
 
     test_app app{};
     app.run(1280, 720, "fae demo");
 
-    fae::log("========== fae-demo end ==========");
+    fae::log("========== fae demo end ==========");
 }

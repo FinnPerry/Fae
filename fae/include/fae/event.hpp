@@ -17,7 +17,7 @@ public:
 
     ~event() = default;
 
-    void invoke(arg_types ... args);
+    void operator ()(arg_types ... args);
 
     void add_callback(callback func);
 
@@ -28,7 +28,7 @@ private:
 };
 
 template<class ... arg_types>
-void event<arg_types...>::invoke(arg_types ... args)
+void event<arg_types...>::operator ()(arg_types ... args)
 {
     for (auto i : listners_)
     {
