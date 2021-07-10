@@ -8,24 +8,6 @@
 namespace
 {
 
-char const * vert_shader
-{
-    "#version 430\n"
-    "in vec3 position;\n"
-    "void main() {\n"
-    "   gl_Position = vec4(position, 1.0f);\n"
-    "}"
-};
-
-char const * frag_shader
-{
-    "#version 430\n"
-    "out vec4 color;\n"
-    "void main() {\n"
-    "   color = vec4(0.0f, 1.0f, 0.0f, 1.0f);\n"
-    "}"
-};
-
 class test_app : public fae::application
 {
 public:
@@ -38,7 +20,7 @@ public:
 
     virtual void load() override
     {
-        shader = std::make_unique<fae::shader>(vert_shader, frag_shader);
+        shader = std::make_unique<fae::shader>();
 
         mesh = std::make_unique<fae::mesh>();
         fae::vertex vert_data[3]
