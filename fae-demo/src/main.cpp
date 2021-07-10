@@ -18,10 +18,9 @@ char const * vert_shader
 
 char const * frag_shader
 {
-    "#version 430\n"
-    "out vec4 color;\n"
-    "void main() {\n"
-    "   color = vec4(0.0f, 1.0f, 0.0f, 1.0f);\n"
+    "vec4 frag()\n"
+    "{\n"
+    "   return vec4(0.0f, 1.0f, 0.0f, 1.0f);\n"
     "}"
 };
 

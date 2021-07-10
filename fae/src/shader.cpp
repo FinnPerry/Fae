@@ -21,6 +21,20 @@ char const * vert_end
     "}"
 };
 
+std::string frag_start
+{
+    "#version 430\n"
+    "out vec4 color;\n"
+};
+
+char const * frag_end
+{
+    "void main()\n"
+    "{\n"
+    "   color = frag();\n"
+    "}"
+};
+
 }
 
 namespace fae
@@ -35,8 +49,10 @@ shader::shader(char const * vert, char const * frag):
     glShaderSource(vs, 1, &vert_ptr, nullptr);
     glCompileShader(vs);
 
+    auto full_frag{frag_start + frag + frag_end};
+    auto frag_ptr{full_frag.c_str()};
     auto fs{glCreateShader(GL_FRAGMENT_SHADER)};
-    glShaderSource(fs, 1, &frag, nullptr);
+    glShaderSource(fs, 1, &frag_ptr, nullptr);
     glCompileShader(fs);
 
     id_ = glad_glCreateProgram();
