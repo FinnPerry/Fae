@@ -7,9 +7,13 @@ namespace fae
 class shader
 {
 public:
-    // vert and frag shader strings must contain function with the following signatures:
-    // vec4 vert()
-    // vec4 frag()
+    // vertex shader must provide a definition to the following function:
+    // vec4 vert();
+    // this function should return the final vertex position
+    // a vec3 position variable is provided containing the mesh vertex position
+    // fragment shader must provide a definition to the following function:
+    // vec4 frag();
+    // this function should return the final fragment color
     shader(char const * vert, char const * frag);
 
     ~shader();
