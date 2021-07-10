@@ -10,10 +10,9 @@ namespace
 
 char const * vert_shader
 {
-    "#version 430\n"
-    "in vec3 position;\n"
-    "void main() {\n"
-    "   gl_Position = vec4(position, 1.0f);\n"
+    "vec4 vert()\n"
+    "{\n"
+    "   return vec4(position, 1.0f);\n"
     "}"
 };
 
