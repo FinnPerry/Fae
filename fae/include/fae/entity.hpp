@@ -16,6 +16,7 @@ public:
     struct update_args
     {
         window * window_ptr;
+        entity * root;
     };
 
     struct render_args
