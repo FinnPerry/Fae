@@ -7,31 +7,44 @@
 namespace fae
 {
 
+class window;
+class renderer;
+
 class entity
 {
 public:
+    struct update_args
+    {
+        window * window_ptr;
+    };
+
+    struct render_args
+    {
+        renderer * renderer_ptr;
+    };
+
     entity() = default;
 
     virtual ~entity() = default;
 
-    virtual void load() {}
+    virtual void load(update_args const & args) {}
 
-    virtual void unload() {}
+    virtual void unload(update_args const & args) {}
 
-    virtual void update() {}
+    virtual void update(update_args const & args) {}
 
-    virtual void render() const {}
+    virtual void render(render_args const & args) const {}
 
     inline std::vector<std::unique_ptr<entity>> const get_children() const
     { return children_; }
 
-    void load_rec();
+    void load_rec(update_args const & args);
 
-    void unload_rec();
+    void unload_rec(update_args const & args);
 
-    void update_rec();
+    void update_rec(update_args const & args);
 
-    void render_rec() const;
+    void render_rec(render_args const & args) const;
 
 private:
     std::vector<std::unique_ptr<entity>> children_;
