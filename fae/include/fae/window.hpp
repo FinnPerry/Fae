@@ -4,6 +4,8 @@
 #include <string>
 #include <memory>
 
+#include "event.hpp"
+
 struct GLFWwindow;
 
 namespace fae
@@ -21,6 +23,10 @@ public:
     void bind();
 
     void update_screen();
+
+    event<> on_close;
+
+    event<int, int> on_resize;
 
 private:
     using win_ptr = std::unique_ptr<GLFWwindow, void(*)(GLFWwindow *)>;

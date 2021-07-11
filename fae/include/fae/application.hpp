@@ -25,7 +25,13 @@ public:
 
     virtual void update() {}
 
-protected:
+    inline window * get_window()
+    { return window_.get(); }
+
+    renderer * get_renderer()
+    { return renderer_.get(); }
+
+private:
     std::unique_ptr<window> window_;
     std::unique_ptr<renderer> renderer_;
 };

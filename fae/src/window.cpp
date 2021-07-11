@@ -5,10 +5,29 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#define GET_USER_PTR auto window{reinterpret_cast<::fae::window *>(glfwGetWindowUserPointer(glfw_win))}
+
+namespace
+{
+    void window_close_callback(GLFWwindow * glfw_win)
+    {
+        GET_USER_PTR;
+        window->on_close();
+    }
+
+    void window_resize_callback(GLFWwindow * glfw_win, int width, int height)
+    {
+        GET_USER_PTR;
+        window->on_resize(width, height);
+    }
+}
+
 namespace fae
 {
 
 window::window(int width, int height, std::string title):
+    on_close{},
+    on_resize{},
     window_{nullptr, glfwDestroyWindow},
     title_{std::move(title)}
 {
@@ -19,6 +38,10 @@ window::window(int width, int height, std::string title):
 
     window_.reset(glfwCreateWindow(width, height, title_.c_str(), nullptr, nullptr));
     log("Created window", '"' + title_ + "\".");
+
+    glfwSetWindowUserPointer(window_.get(), this);
+    glfwSetWindowCloseCallback(window_.get(), window_close_callback);
+    glfwSetWindowSizeCallback(window_.get(), window_resize_callback);
 }
 
 window::~window()
