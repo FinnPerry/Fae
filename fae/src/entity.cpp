@@ -25,7 +25,7 @@ void entity::set_parent(entity * parent)
     }
 }
 
-void entity::load_rec(update_args & args)
+void entity::load_rec(update_args const & args)
 {
     load(args);
     for (auto i : children_)
@@ -34,7 +34,7 @@ void entity::load_rec(update_args & args)
     }
 }
 
-void entity::unload_rec(update_args & args)
+void entity::unload_rec(update_args const & args)
 {
     for (auto i : children_)
     {
@@ -43,7 +43,7 @@ void entity::unload_rec(update_args & args)
     unload(args);
 }
 
-void entity::update_rec(update_args & args)
+void entity::update_rec(update_args const & args)
 {
     update(args);
     for (auto i : children_)
@@ -52,7 +52,7 @@ void entity::update_rec(update_args & args)
     }
 }
 
-void entity::render_rec(render_args & args) const
+void entity::render_rec(render_args const & args) const
 {
     render(args);
     for (auto i : children_)

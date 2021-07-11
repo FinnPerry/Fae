@@ -33,22 +33,22 @@ public:
 
     void set_parent(entity * parent);
 
-    void load_rec(update_args & args);
+    void load_rec(update_args const & args);
 
-    void unload_rec(update_args & args);
+    void unload_rec(update_args const & args);
 
-    void update_rec(update_args & args);
+    void update_rec(update_args const & args);
 
-    void render_rec(render_args & args) const;
+    void render_rec(render_args const & args) const;
 
 protected:
-    virtual void load(update_args & args) {}
+    virtual void load(update_args const & args) {}
 
-    virtual void unload(update_args & args) {}
+    virtual void unload(update_args const & args) {}
 
-    virtual void update(update_args & args) {}
+    virtual void update(update_args const & args) {}
 
-    virtual void render(render_args & args) const {}
+    virtual void render(render_args const & args) const {}
 
 private:
     entity * parent_;

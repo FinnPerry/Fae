@@ -14,11 +14,11 @@ public:
     virtual ~triangle_entity() = default;
 
 protected:
-    virtual void load(update_args & args) override;
+    virtual void load(update_args const & args) override;
 
-    virtual void unload(update_args & args) override;
+    virtual void unload(update_args const & args) override;
 
-    virtual void render(render_args & args) const override;
+    virtual void render(render_args const & args) const override;
 
 private:
     std::unique_ptr<fae::shader> shader_;
