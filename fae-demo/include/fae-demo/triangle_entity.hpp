@@ -8,6 +8,11 @@ namespace fae_demo
 
 class triangle_entity : public fae::entity
 {
+public:
+    triangle_entity() = default;
+
+    virtual ~triangle_entity() = default;
+
 protected:
     virtual void load(update_args & args) override;
 
