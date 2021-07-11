@@ -27,24 +27,24 @@ public:
 
     virtual ~entity() = default;
 
-    virtual void load(update_args const & args) {}
+    virtual void load(update_args & args) {}
 
-    virtual void unload(update_args const & args) {}
+    virtual void unload(update_args & args) {}
 
-    virtual void update(update_args const & args) {}
+    virtual void update(update_args & args) {}
 
-    virtual void render(render_args const & args) const {}
+    virtual void render(render_args & args) const {}
 
     inline std::vector<std::unique_ptr<entity>> const get_children() const
     { return children_; }
 
-    void load_rec(update_args const & args);
+    void load_rec(update_args & args);
 
-    void unload_rec(update_args const & args);
+    void unload_rec(update_args & args);
 
-    void update_rec(update_args const & args);
+    void update_rec(update_args & args);
 
-    void render_rec(render_args const & args) const;
+    void render_rec(render_args & args) const;
 
 private:
     std::vector<std::unique_ptr<entity>> children_;

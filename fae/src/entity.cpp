@@ -3,7 +3,7 @@
 namespace fae
 {
 
-void entity::load_rec(update_args const & args)
+void entity::load_rec(update_args & args)
 {
     load(args);
     for (std::unique_ptr<entity> & i : children_)
@@ -12,7 +12,7 @@ void entity::load_rec(update_args const & args)
     }
 }
 
-void entity::unload_rec(update_args const & args)
+void entity::unload_rec(update_args & args)
 {
     for (std::unique_ptr<entity> & i : children_)
     {
@@ -21,7 +21,7 @@ void entity::unload_rec(update_args const & args)
     unload(args);
 }
 
-void entity::update_rec(update_args const & args)
+void entity::update_rec(update_args & args)
 {
     update(args);
     for (std::unique_ptr<entity> & i : children_)
@@ -30,7 +30,7 @@ void entity::update_rec(update_args const & args)
     }
 }
 
-void entity::render_rec(render_args const & args) const
+void entity::render_rec(render_args & args) const
 {
     render(args);
     for (std::unique_ptr<entity> const & i : children_)
