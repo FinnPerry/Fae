@@ -1,9 +1,9 @@
-#include "root_entity.hpp"
+#include "triangle_entity.hpp"
 
 namespace fae_demo
 {
 
-void root_entity::load(update_args & args)
+void triangle_entity::load(update_args & args)
 {
     shader_ = std::make_unique<fae::shader>();
 
@@ -22,13 +22,13 @@ void root_entity::load(update_args & args)
     mesh_->set_tris(tri_data, 1);
 }
 
-void root_entity::unload(update_args & args)
+void triangle_entity::unload(update_args & args)
 {
     mesh_.reset();
     shader_.reset();
 }
 
-void root_entity::render(render_args & args) const
+void triangle_entity::render(render_args & args) const
 {
     shader_->bind();
     args.renderer_ptr->draw_mesh(*mesh_.get());

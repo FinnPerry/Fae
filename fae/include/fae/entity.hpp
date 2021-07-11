@@ -24,20 +24,14 @@ public:
         renderer * renderer_ptr;
     };
 
-    entity() = default;
+    entity();
 
     virtual ~entity() = default;
 
-    virtual void load(update_args & args) {}
-
-    virtual void unload(update_args & args) {}
-
-    virtual void update(update_args & args) {}
-
-    virtual void render(render_args & args) const {}
-
-    inline std::vector<std::unique_ptr<entity>> const & get_children() const
+    inline std::vector<entity *> const & get_children() const
     { return children_; }
+
+    void set_parent(entity * parent);
 
     void load_rec(update_args & args);
 
@@ -47,8 +41,18 @@ public:
 
     void render_rec(render_args & args) const;
 
+protected:
+    virtual void load(update_args & args) {}
+
+    virtual void unload(update_args & args) {}
+
+    virtual void update(update_args & args) {}
+
+    virtual void render(render_args & args) const {}
+
 private:
-    std::vector<std::unique_ptr<entity>> children_;
+    entity * parent_;
+    std::vector<entity *> children_;
 };
 
 }
