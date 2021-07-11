@@ -1,13 +1,14 @@
 #include <memory>
 
 #include <fae/application.hpp>
-#include <fae/event.hpp>
+#include <fae/entity.hpp>
 #include <fae/logger.hpp>
-#include <fae/mesh.hpp>
-#include <fae/shader.hpp>
+#include <fae/window.hpp>
 
 namespace
 {
+
+#if false
 
 class test_app : public fae::application
 {
@@ -64,14 +65,60 @@ private:
     std::unique_ptr<fae::mesh> mesh;
 };
 
+
+#endif
+
+class root_entity : public fae::entity
+{
+public:
+    virtual void load(update_args & args) override
+    {
+        fae::log("load");
+        count = 0;
+        func = [](int w, int h)->void
+        {
+            fae::log(w, h);
+        };
+        args.window_ptr->on_resize.add_callback(func);
+    }
+
+    virtual void unload(update_args & args) override
+    {
+        fae::log("unload");
+        args.window_ptr->on_resize.remove_callback(func);
+        func = nullptr;
+    }
+
+    virtual void update(update_args & args) override
+    {
+        ++count;
+        if (count % 100 == 0)
+        {
+            fae::log("update");
+        }
+    }
+
+    virtual void render(render_args & args) const override
+    {
+        if (count % 150 == 0)
+        {
+            fae::log("render");
+        }
+    }
+
+private:
+    int count;
+    void(*func)(int, int);
+};
+
 }
 
 int main()
 {
     fae::log("========== fae demo start ==========");
 
-    test_app app{};
-    app.run(1280, 720, "fae demo");
+    root_entity root;
+    fae::run(1280, 720, "fae demo", &root);
 
     fae::log("========== fae demo end ==========");
 }

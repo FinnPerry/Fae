@@ -36,7 +36,7 @@ public:
 
     virtual void render(render_args & args) const {}
 
-    inline std::vector<std::unique_ptr<entity>> const get_children() const
+    inline std::vector<std::unique_ptr<entity>> const & get_children() const
     { return children_; }
 
     void load_rec(update_args & args);
