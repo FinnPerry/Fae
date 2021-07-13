@@ -27,7 +27,7 @@
         - Make sure to run `cmake --install`
 - Build fae:
     - Open msvc dev cmd. (This is required for build.bat, other scripts can be run normally.)
-    - Navigate to the fae/scripts/windows/ folder
+    - Navigate to the fae\scripts\windows\ folder
     - The following scripts can be used to build the project:
         - `call clean.bat` to delete build files
         - `call configure.bat` to generate build scripts
