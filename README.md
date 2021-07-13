@@ -26,7 +26,7 @@
     - Build and install glfw3 from https://github.com/glfw/glfw.git
         - Make sure to run `cmake --install`
 - Build fae:
-    - Open msvc dev cmd. (This is required for build.bat and by extension build-and-run-demo.bat. Other scripts can be run in a normal terminal or by double clicking.)
+    - Open msvc dev cmd. (This is required for build.bat, other scripts can be run normally.)
     - Navigate to the fae/scripts/windows/ folder
     - The following scripts can be used to build the project:
         - `call clean.bat` to delete build files
