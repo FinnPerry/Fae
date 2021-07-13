@@ -11,12 +11,12 @@
 - Build fae:
     - Navigate to the fae/scripts/linux/ folder
     - The following scripts can be used to build the project:
-        - `bash clean` to delete build files
-        - `bash configure` to generate build scripts
-        - `bash build` to compile
-        - `bash run-demo` to run the demo exe
+        - `./clean` to delete build files
+        - `./configure` to generate build scripts
+        - `./build` to compile
+        - `./run-demo` to run the demo exe
     - To perform a full re-build, run the scripts in a chain:
-        - `bash clean && bash configure && bash build && bash run-demo`
+        - `./clean && ./configure && ./build && ./run-demo`
 
 ### Windows:
 

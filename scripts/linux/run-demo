@@ -1,3 +1,4 @@
+#!/bin/sh
 cd ../../build/fae-demo/
 ./fae-demo
 exit $?
