@@ -17,6 +17,8 @@ namespace
 
     void window_resize_callback(GLFWwindow * glfw_win, int width, int height)
     {
+        glViewport(0, 0, width, height);
+
         GET_USER_PTR;
         window->on_resize(width, height);
     }
