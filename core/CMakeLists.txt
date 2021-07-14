@@ -1,0 +1,16 @@
+# src files
+file(GLOB_RECURSE FAE_CORE_SRC ./src/*.cpp ../external/glad/src/*.c)
+add_library(fae-core ${FAE_CORE_SRC})
+target_include_directories(fae-core PRIVATE ./include/fae/)
+
+# glad
+target_include_directories(fae-core PRIVATE ../external/glad/include/)
+
+# glfw
+if (WIN32)
+    target_include_directories(fae-core PRIVATE "C:/Program Files (x86)/GLFW/include/")
+    target_link_libraries(fae-core PRIVATE "C:/Program Files (x86)/GLFW/lib/glfw3.lib")
+else()
+    find_package(glfw3 REQUIRED)
+    target_link_libraries(fae-core PRIVATE glfw3 dl pthread)
+endif()
