@@ -29,7 +29,7 @@ class unit_tests : public Cppunit
         CHECKS("a", "a");
     }
 };
-    
+
 }
 
 int main()
