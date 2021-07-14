@@ -5,3 +5,4 @@ set(CMAKE_CSS_STANDARD 17)
 
 add_subdirectory(core)
 add_subdirectory(demo)
+add_subdirectory(tests)
