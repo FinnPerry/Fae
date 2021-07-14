@@ -5,3 +5,4 @@ set(CMAKE_CSS_STANDARD 17)
 
 add_subdirectory(fae)
 add_subdirectory(fae-demo)
+add_subdirectory(tests)
