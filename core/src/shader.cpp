@@ -1,7 +1,5 @@
 #include "shader.hpp"
 
-#include <string>
-
 #include <glad/glad.h>
 
 namespace

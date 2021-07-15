@@ -1,7 +1,5 @@
 #include "renderer.hpp"
 
-#include <string>
-
 #include <glad/glad.h>
 
 #include "logger.hpp"
