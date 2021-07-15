@@ -25,8 +25,7 @@
     - Visual Studio
     - Ninja
     - glfw3
-        - Note that the cmake scripts assume glfw has been installed using `cmake --install`
-            (or otherwise placed in the same location)
+        - Note that the cmake scripts assume glfw has been installed using `cmake --install` (or otherwise placed in the same location)
 - Build fae:
     - Open Visual Studio Native Tools cmd (x86 or x64 depending on what glfw3 version you have)
     - Navigate to the fae\scripts\windows\ folder
