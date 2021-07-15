@@ -21,12 +21,14 @@
 ### Windows:
 
 - Install dependencies:
-    - Install cmake
-    - Install msvc
-    - Build and install glfw3 from https://github.com/glfw/glfw.git
-        - Make sure to run `cmake --install`
+    - Cmake
+    - Visual Studio
+    - Ninja
+    - glfw3
+        - Note that the cmake scripts assume glfw has been installed using `cmake --install`
+            (or otherwise placed in the same location)
 - Build fae:
-    - Open msvc dev cmd. (This is required for build.bat, other scripts can be run normally.)
+    - Open Visual Studio Native Tools cmd (x86 or x64 depending on what glfw3 version you have)
     - Navigate to the fae\scripts\windows\ folder
     - The following scripts can be used to build the project:
         - `call clean.bat` to delete build files
