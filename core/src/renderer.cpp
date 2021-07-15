@@ -23,7 +23,8 @@ namespace fae
 renderer::renderer():
     vao_{0}
 {
-    glDebugMessageCallback(gl_error_callback, nullptr);
+    auto callback{reinterpret_cast<GLDEBUGPROC>(gl_error_callback)};
+    glDebugMessageCallback(callback, nullptr);
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
