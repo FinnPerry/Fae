@@ -3,9 +3,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <sstream>
-#include <memory>
-
 #include "entity.hpp"
 #include "logger.hpp"
 #include "renderer.hpp"

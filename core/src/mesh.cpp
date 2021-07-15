@@ -1,7 +1,5 @@
 #include "mesh.hpp"
 
-#include <cstddef>
-
 #include <glad/glad.h>
 
 namespace fae

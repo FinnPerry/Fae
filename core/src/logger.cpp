@@ -1,7 +1,5 @@
 #include "logger.hpp"
 
-#include <chrono>
-#include <fstream>
 #include <iostream>
 
 namespace

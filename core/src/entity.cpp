@@ -1,7 +1,5 @@
 #include "entity.hpp"
 
-#include <algorithm>
-
 namespace fae
 {
 
