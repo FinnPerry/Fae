@@ -1,6 +1,6 @@
 @echo off
 pushd ..\..\build\
-msbuild fae.sln
+ninja
 set e=%errorlevel%
 popd
 exit /b %e%

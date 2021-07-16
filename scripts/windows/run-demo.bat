@@ -1,5 +1,5 @@
 @echo off
-pushd ..\..\build\demo\Debug\
+pushd ..\..\build\demo\
 call fae-demo.exe
 set e=%errorlevel%
 popd
