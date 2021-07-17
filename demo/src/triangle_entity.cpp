@@ -1,16 +1,5 @@
 #include "triangle_entity.hpp"
 
-namespace
-{
-
-void window_size_callback(int w, int h)
-{
-    fae::log(w, h);
-}
-int window_size_callback_id;
-    
-}
-
 namespace fae_demo
 {
 
@@ -32,12 +21,15 @@ void triangle_entity::load(update_args const & args)
     };
     mesh_->set_tris(tri_data, 1);
     
-    window_size_callback_id = args.window_ptr->on_resize.add_callback(window_size_callback);
+    window_size_event_ = args.window_ptr->on_resize.add_callback([](int w, int h)->void
+    {
+        fae::log(w, h);
+    });
 }
 
 void triangle_entity::unload(update_args const & args)
 {
-    args.window_ptr->on_resize.remove_callback(window_size_callback_id);
+    args.window_ptr->on_resize.remove_callback(window_size_event_);
     mesh_.reset();
     shader_.reset();
 }
