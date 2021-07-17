@@ -17,7 +17,8 @@ mesh::mesh():
 
     glGenBuffers(1, &vbo_);
     glBindBuffer(GL_ARRAY_BUFFER, vbo_);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, offsetof(vertex, position));
+    auto off{offsetof(vertex, position)};
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void *>(off));
     glEnableVertexAttribArray(0);
 
     glGenBuffers(1, &ibo_);
