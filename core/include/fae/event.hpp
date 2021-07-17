@@ -1,8 +1,8 @@
 #ifndef FAE_EVENT_GUARD
 #define FAE_EVENT_GUARD
 
-#include <algorithm>
-#include <vector>
+#include <functional>
+#include <unordered_map>
 
 namespace fae
 {
@@ -11,7 +11,7 @@ template<class ... arg_types>
 class event
 {
 public:
-    using callback = void(*)(arg_types...);
+    using callback = std::function<void(arg_types...)>;
 
     event() = default;
 
@@ -19,37 +19,51 @@ public:
 
     void operator ()(arg_types ... args);
 
-    void add_callback(callback func);
+    int add_callback(callback func);
 
-    void remove_callback(callback func);
+    void remove_callback(int id);
 
 private:
-    std::vector<callback> listners_;
+    int next_id();
+
+    std::unordered_map<int, callback> listners_;
+    int id_counter_;
 };
 
 template<class ... arg_types>
 void event<arg_types...>::operator ()(arg_types ... args)
 {
-    for (auto i : listners_)
+    for (auto i{listners_.begin()}; i != listners_.end(); ++i)
     {
-        i(args...);
+        i->second(args...);
     }
 }
 
 template<class ... arg_types>
-void event<arg_types...>::add_callback(callback func)
+int event<arg_types...>::add_callback(callback func)
 {
-    listners_.push_back(func);
+    listners_[next_id()] = func;
+    return id_counter_;
 }
 
 template<class ... arg_types>
-void event<arg_types...>::remove_callback(callback func)
+void event<arg_types...>::remove_callback(int id)
 {
-    auto i{std::find(listners_.begin(), listners_.end(), func)};
+    auto i{listners_.find(id)};
     if (i != listners_.end())
     {
         listners_.erase(i);
     }
+}
+
+template<class ... arg_types>
+int event<arg_types...>::next_id()
+{
+    do
+    {
+        ++id_counter_;
+    } while (listners_.contains(id_counter_));
+    return id_counter_;
 }
 
 }

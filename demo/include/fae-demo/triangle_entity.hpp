@@ -23,6 +23,7 @@ protected:
 private:
     std::unique_ptr<fae::shader> shader_;
     std::unique_ptr<fae::mesh> mesh_;
+    int window_size_event_;
 };
 
 }
