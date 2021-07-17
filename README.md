@@ -10,13 +10,14 @@
         - Note that the cmake scripts assume glfw has been installed using `make install`
 - Build fae:
     - Navigate to the fae/scripts/linux/ folder
-    - The following scripts can be used to build the project:
+    - Run the following scripts to build and run the project:
         - `./clean` to delete build files
         - `./configure` to generate build scripts
         - `./build` to compile
-        - `./run-demo` to run the demo exe
-    - To perform a full re-build, run the scripts in a chain:
-        - `./clean && ./configure && ./build && ./run-demo`
+        - `./run-demo` to run the demo
+        - `./run-tests` to run unit tests
+    - Scripts can be chained to perform a full rebuild. e.g.
+        - `./clean && ./configure && ./build`
 
 ### Windows:
 
@@ -33,6 +34,7 @@
         - `call clean.bat` to delete build files
         - `call configure.bat` to generate build scripts
         - `call build.bat` to compile
-        - `call run-demo.bat` to run the demo exe
-    - To perform a full re-build, run the scripts in a chain:
-        - `call clean.bat && call configure.bat && call build.bat && call run-demo.bat`
+        - `call run-demo.bat` to run the demo
+        - `call run-tests.bat` to run unit tests
+    - Scripts can be chained to perform a full rebuild. e.g.
+        - `call clean.bat && call configure.bat && call build.bat`
