@@ -13,7 +13,7 @@ triangle_entity::triangle_entity(fae::glad_context * context):
 
 void triangle_entity::load(update_args const & args)
 {
-    shader_ = std::make_unique<fae::shader>();
+    shader_ = std::make_unique<fae::shader>(context_);
 
     mesh_ = std::make_unique<fae::mesh>(context_);
     fae::vertex vert_data[3]

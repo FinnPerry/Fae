@@ -34,6 +34,10 @@ public:
     static int gldef_triangles();
 
     static int gldef_unsigned_int();
+    
+    static int gldef_vertex_shader();
+
+    static int gldef_fragment_shader();
 
     void gen_vertex_arrays(int n, unsigned int * arrays);
 
@@ -64,6 +68,24 @@ public:
     void clear(int mask);
 
     void draw_elements(int mode, int count, int type, void const * indices);
+
+    unsigned int create_shader(int type);
+
+    void shader_source(unsigned int shader, int count, char const ** string, int const * length);
+
+    void compile_shader(unsigned int shader);
+
+    unsigned int create_program();
+
+    void attach_shader(unsigned int program, unsigned int shader);
+
+    void link_program(unsigned int program);
+
+    void delete_shader(unsigned int shader);
+
+    void delete_program(unsigned int program);
+
+    void use_program(unsigned int program);
 };
 
 }

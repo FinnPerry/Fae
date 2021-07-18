@@ -62,6 +62,16 @@ int glad_context::gldef_unsigned_int()
     return GL_UNSIGNED_INT;
 }
 
+int glad_context::gldef_vertex_shader()
+{
+    return GL_VERTEX_SHADER;
+}
+
+int glad_context::gldef_fragment_shader()
+{
+    return GL_FRAGMENT_SHADER;
+}
+
 void glad_context::gen_vertex_arrays(int n, unsigned int * arrays)
 {
     glGenVertexArrays(n, arrays);
@@ -136,6 +146,51 @@ void glad_context::clear(int mask)
 void glad_context::draw_elements(int mode, int count, int type, void const * indices)
 {
     glDrawElements(mode, count, type, indices);
+}
+
+unsigned int glad_context::create_shader(int type)
+{
+    return glCreateShader(type);
+}
+
+void glad_context::shader_source(unsigned int shader, int count, char const ** string, int const * length)
+{
+    glShaderSource(shader, count, string, length);
+}
+
+void glad_context::compile_shader(unsigned int shader)
+{
+    glCompileShader(shader);
+}
+
+unsigned int glad_context::create_program()
+{
+    return glCreateProgram();
+}
+
+void glad_context::attach_shader(unsigned int program, unsigned int shader)
+{
+    glAttachShader(program, shader);
+}
+
+void glad_context::link_program(unsigned int program)
+{
+    glLinkProgram(program);
+}
+
+void glad_context::delete_shader(unsigned int shader)
+{
+    glDeleteShader(shader);
+}
+
+void glad_context::delete_program(unsigned int program)
+{
+    glDeleteProgram(program);
+}
+
+void glad_context::use_program(unsigned int program)
+{
+    glUseProgram(program);
 }
 
 }
