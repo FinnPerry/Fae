@@ -1,7 +1,5 @@
 #include "application.hpp"
 
-#include <glad/glad.h>
-
 #include "entity.hpp"
 #include "logger.hpp"
 #include "renderer.hpp"
