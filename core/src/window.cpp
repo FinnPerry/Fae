@@ -9,19 +9,21 @@
 
 namespace
 {
-    void window_close_callback(GLFWwindow * glfw_win)
-    {
-        GET_USER_PTR;
-        window->on_close();
-    }
 
-    void window_resize_callback(GLFWwindow * glfw_win, int width, int height)
-    {
-        glViewport(0, 0, width, height);
+void window_close_callback(GLFWwindow * glfw_win)
+{
+    GET_USER_PTR;
+    window->on_close();
+}
 
-        GET_USER_PTR;
-        window->on_resize(width, height);
-    }
+void window_resize_callback(GLFWwindow * glfw_win, int width, int height)
+{
+    glViewport(0, 0, width, height);
+
+    GET_USER_PTR;
+    window->on_resize(width, height);
+}
+
 }
 
 namespace fae
@@ -31,14 +33,26 @@ window::window(int width, int height, std::string title):
     on_close{},
     on_resize{},
     window_{nullptr, glfwDestroyWindow},
+    width_{width},
+    height_{height},
     title_{std::move(title)}
+{
+}
+
+window::~window()
+{
+    close();
+    log("Destroyed window", '"' + title_ + "\".");
+}
+
+void window::open()
 {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
-    window_.reset(glfwCreateWindow(width, height, title_.c_str(), nullptr, nullptr));
+    window_.reset(glfwCreateWindow(width_, height_, title_.c_str(), nullptr, nullptr));
     log("Created window", '"' + title_ + "\".");
 
     glfwSetWindowUserPointer(window_.get(), this);
@@ -46,9 +60,9 @@ window::window(int width, int height, std::string title):
     glfwSetWindowSizeCallback(window_.get(), window_resize_callback);
 }
 
-window::~window()
+void window::close()
 {
-    log("Destroyed window", '"' + title_ + "\".");
+    window_.reset();
 }
 
 bool window::should_close()

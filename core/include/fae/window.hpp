@@ -18,8 +18,12 @@ public:
 
     ~window();
 
-    bool should_close();
+    void open();
+    
+    void close();
 
+    bool should_close();
+    
     void bind();
 
     void update_screen();
@@ -32,6 +36,8 @@ private:
     using win_ptr = std::unique_ptr<GLFWwindow, void(*)(GLFWwindow *)>;
 
     win_ptr window_;
+    int width_;
+    int height_;
     std::string title_;
 };
 

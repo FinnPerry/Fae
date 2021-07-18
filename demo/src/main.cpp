@@ -7,6 +7,12 @@
 int main()
 {
     fae::log("========== fae demo start ==========");
+    
+    // create the window
+    fae::window win{1280, 720, "fae demo"};
+
+    // create the renderer
+    fae::renderer ren;
 
     // create entities
     fae::entity root;
@@ -14,7 +20,8 @@ int main()
     triangle.set_parent(&root);
 
     // run the app
-    fae::run(1280, 720, "fae demo", &root);
+    fae::application app{&win, &ren, &root};
+    app.run();
 
     fae::log("========== fae demo end ==========");
 }

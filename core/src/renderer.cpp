@@ -20,8 +20,7 @@ void gl_error_callback(GLenum source, GLenum type, unsigned int id, GLenum sever
 namespace fae
 {
 
-renderer::renderer():
-    vao_{0}
+void renderer::init()
 {
     auto callback{reinterpret_cast<GLDEBUGPROC>(gl_error_callback)};
     glDebugMessageCallback(callback, nullptr);

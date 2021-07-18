@@ -9,16 +9,15 @@ namespace fae
 class renderer
 {
 public:
-    renderer();
+    renderer() = default;
 
     ~renderer() = default;
+    
+    void init();
 
     void clear();
 
     void draw_mesh(mesh const & m);
-
-private:
-    unsigned int vao_;
 };
 
 }
