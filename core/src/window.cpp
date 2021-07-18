@@ -10,6 +10,11 @@
 namespace
 {
 
+void glfw_error_callback(int error, char const * message)
+{
+    fae::log(fae::log_type::error, "GLFW error", error, ':', message);
+}
+
 void window_close_callback(GLFWwindow * glfw_win)
 {
     GET_USER_PTR;
@@ -29,6 +34,8 @@ void window_resize_callback(GLFWwindow * glfw_win, int width, int height)
 namespace fae
 {
 
+int window::instance_count_{0};
+
 window::window(int width, int height, std::string title):
     on_close{},
     on_resize{},
@@ -47,6 +54,8 @@ window::~window()
 
 void window::open()
 {
+    init_glfw();
+
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -63,6 +72,12 @@ void window::open()
 void window::close()
 {
     window_.reset();
+    terminate_glfw();
+}
+
+void window::update()
+{
+    glfwPollEvents();
 }
 
 bool window::should_close()
@@ -82,6 +97,27 @@ void window::bind()
 void window::update_screen()
 {
     glfwSwapBuffers(window_.get());
+}
+
+void window::init_glfw()
+{
+    ++instance_count_;
+    if (instance_count_ == 1)
+    {
+        glfwSetErrorCallback(glfw_error_callback);
+        glfwInit();
+        log("Initialized GLFW.");
+    }
+}
+
+void window::terminate_glfw()
+{
+    --instance_count_;
+    if (instance_count_ == 0)
+    {
+        glfwTerminate();
+        log("Terminated GLFW.");
+    }
 }
 
 }

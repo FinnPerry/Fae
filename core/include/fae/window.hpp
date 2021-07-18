@@ -21,6 +21,8 @@ public:
     void open();
     
     void close();
+    
+    void update();
 
     bool should_close();
     
@@ -34,6 +36,12 @@ public:
 
 private:
     using win_ptr = std::unique_ptr<GLFWwindow, void(*)(GLFWwindow *)>;
+    
+    void init_glfw();
+    
+    void terminate_glfw();
+    
+    static int instance_count_;
 
     win_ptr window_;
     int width_;

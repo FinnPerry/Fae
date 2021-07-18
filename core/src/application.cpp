@@ -1,22 +1,11 @@
 #include "application.hpp"
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 #include "entity.hpp"
 #include "logger.hpp"
 #include "renderer.hpp"
 #include "window.hpp"
-
-namespace
-{
-
-void glfw_error_callback(int error, char const * message)
-{
-    fae::log(fae::log_type::error, "GLFW error", error, ':', message);
-}
-
-}
 
 namespace fae
 {
@@ -34,9 +23,6 @@ application::~application()
 
 void application::run()
 {
-    glfwSetErrorCallback(glfw_error_callback);
-    glfwInit();
-    log("Initialized GLFW.");
     win_->open();
     win_->bind();
     ren_->init();
@@ -55,7 +41,7 @@ void application::run()
     root_->load_rec(u_args);
     while (!win_->should_close())
     {
-        glfwPollEvents();
+        win_->update();
         root_->update_rec(u_args);
 
         ren_->clear();
@@ -65,8 +51,6 @@ void application::run()
     root_->unload_rec(u_args);
 
     win_->close();
-    glfwTerminate();
-    log("Terminated GLFW.");
 }
 
 }
