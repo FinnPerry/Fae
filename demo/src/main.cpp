@@ -7,7 +7,7 @@
 int main()
 {
     fae::log("========== fae demo start ==========");
-    
+
     // create the window
     fae::window win{1280, 720, "fae demo"};
 
