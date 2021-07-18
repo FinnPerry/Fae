@@ -72,6 +72,21 @@ int glad_context::gldef_fragment_shader()
     return GL_FRAGMENT_SHADER;
 }
 
+int glad_context::gldef_version()
+{
+    return GL_VERSION;
+}
+
+int glad_context::gldef_renderer()
+{
+    return GL_RENDERER;
+}
+
+void glad_context::load_gl_loader(void(*load_proc)(char const *))
+{
+    gladLoadGLLoader(reinterpret_cast<GLADloadproc>(load_proc));
+}
+
 void glad_context::gen_vertex_arrays(int n, unsigned int * arrays)
 {
     glGenVertexArrays(n, arrays);
@@ -191,6 +206,16 @@ void glad_context::delete_program(unsigned int program)
 void glad_context::use_program(unsigned int program)
 {
     glUseProgram(program);
+}
+
+char const * glad_context::get_string(int name)
+{
+    return reinterpret_cast<char const *>(glGetString(name));
+}
+
+void glad_context::viewport(int x, int y, int width, int height)
+{
+    glViewport(x, y, width, height);
 }
 
 }

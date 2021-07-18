@@ -38,6 +38,12 @@ public:
     static int gldef_vertex_shader();
 
     static int gldef_fragment_shader();
+    
+    static int gldef_version();
+
+    static int gldef_renderer();
+    
+    void load_gl_loader(void(*load_proc)(char const *));
 
     void gen_vertex_arrays(int n, unsigned int * arrays);
 
@@ -86,6 +92,10 @@ public:
     void delete_program(unsigned int program);
 
     void use_program(unsigned int program);
+    
+    char const * get_string(int name);
+    
+    void viewport(int x, int y, int width, int height);
 };
 
 }

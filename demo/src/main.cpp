@@ -9,8 +9,8 @@ int main()
     fae::log("========== fae demo start ==========");
 
     // create objects
-    fae::window win{1280, 720, "fae demo"};
     fae::glad_context context;
+    fae::window win{&context, 1280, 720, "fae demo"};
     fae::renderer ren{&context};
 
     // create entities

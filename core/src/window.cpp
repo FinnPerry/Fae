@@ -1,14 +1,17 @@
 #include "window.hpp"
 
-#include "logger.hpp"
-
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#define GET_USER_PTR auto window{reinterpret_cast<::fae::window *>(glfwGetWindowUserPointer(glfw_win))}
+#include "glad_context.hpp"
+#include "logger.hpp"
 
 namespace
 {
+
+fae::window * get_user_ptr(GLFWwindow * win)
+{
+    return reinterpret_cast<::fae::window *>(glfwGetWindowUserPointer(win));
+}
 
 void glfw_error_callback(int error, char const * message)
 {
@@ -17,15 +20,14 @@ void glfw_error_callback(int error, char const * message)
 
 void window_close_callback(GLFWwindow * glfw_win)
 {
-    GET_USER_PTR;
+    auto window{get_user_ptr(glfw_win)};
     window->on_close();
 }
 
 void window_resize_callback(GLFWwindow * glfw_win, int width, int height)
 {
-    glViewport(0, 0, width, height);
-
-    GET_USER_PTR;
+    auto window{get_user_ptr(glfw_win)};
+    window->get_context()->viewport(0, 0, width, height);
     window->on_resize(width, height);
 }
 
@@ -36,9 +38,10 @@ namespace fae
 
 int window::instance_count_{0};
 
-window::window(int width, int height, std::string title):
+window::window(glad_context * context, int width, int height, std::string title):
     on_close{},
     on_resize{},
+    context_{context},
     window_{nullptr, glfwDestroyWindow},
     width_{width},
     height_{height},
@@ -88,10 +91,10 @@ bool window::should_close()
 void window::bind()
 {
     glfwMakeContextCurrent(window_.get());
-    gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
-    log("Initialized Glad for window", '"' + title_ + "\".");
-    log("OpenGL version:", reinterpret_cast<char const *>(glGetString(GL_VERSION)));
-    log("OpenGL renderer:", reinterpret_cast<char const *>(glGetString(GL_RENDERER)));
+    context_->load_gl_loader(reinterpret_cast<void(*)(char const *)>(glfwGetProcAddress));
+    log("Initialized OpenGL context for window", '"' + title_ + "\".");
+    log("OpenGL version:", context_->get_string(glad_context::gldef_version()));
+    log("OpenGL renderer:", context_->get_string(glad_context::gldef_renderer()));
 }
 
 void window::update_screen()
