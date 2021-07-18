@@ -3,11 +3,19 @@
 namespace fae_demo
 {
 
+triangle_entity::triangle_entity(fae::glad_context * context):
+    context_{context},
+    shader_{nullptr},
+    mesh_{nullptr},
+    window_size_event_{0}
+{
+}
+
 void triangle_entity::load(update_args const & args)
 {
-    shader_ = std::make_unique<fae::shader>();
+    shader_ = std::make_unique<fae::shader>(context_);
 
-    mesh_ = std::make_unique<fae::mesh>();
+    mesh_ = std::make_unique<fae::mesh>(context_);
     fae::vertex vert_data[3]
     {
         {0.0f, 0.5f},

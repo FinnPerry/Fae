@@ -1,66 +1,67 @@
 #include "mesh.hpp"
 
-#include <glad/glad.h>
+#include "glad_context.hpp"
 
 namespace fae
 {
 
-mesh::mesh():
+mesh::mesh(glad_context * context):
+    context_{context},
     vao_{0},
     vbo_{0},
     vb_size_{0},
     ibo_{0},
     ib_size_{0}
 {
-    glGenVertexArrays(1, &vao_);
+    context_->gen_vertex_arrays(1, &vao_);
     bind();
 
-    glGenBuffers(1, &vbo_);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_);
+    context_->gen_buffers(1, &vbo_);
+    context_->bind_buffer(glad_context::gldef_array_buffer(), vbo_);
     auto off{offsetof(vertex, position)};
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void *>(off));
-    glEnableVertexAttribArray(0);
+    context_->vertex_attrib_pointer(0, 3, glad_context::gldef_float(), false, 0, reinterpret_cast<void *>(off));
+    context_->enable_vertex_attrib_array(0);
 
-    glGenBuffers(1, &ibo_);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_);
+    context_->gen_buffers(1, &ibo_);
+    context_->bind_buffer(glad_context::gldef_element_array_buffer(), ibo_);
 }
 
 mesh::~mesh()
 {
-    glDeleteBuffers(1, &ibo_);
-    glDeleteBuffers(1, &vbo_);
-    glDeleteVertexArrays(1, &vao_);
+    context_->delete_buffers(1, &ibo_);
+    context_->delete_buffers(1, &vbo_);
+    context_->delete_vertex_arrays(1, &vao_);
 }
 
 void mesh::bind() const
 {
-    glBindVertexArray(vao_);
+    context_->bind_vertex_array(vao_);
 }
 
 void mesh::set_verts(vertex const * data, int size)
 {
     bind();
     vb_size_ = size;
-    glBufferData(GL_ARRAY_BUFFER, vb_size_ * sizeof(vertex), data, GL_DYNAMIC_DRAW);
+    context_->buffer_data(glad_context::gldef_array_buffer(), vb_size_ * sizeof(vertex), data, glad_context::gldef_dynamic_draw());
 }
 
 void mesh::set_verts_partial(vertex const * data, int start, int size)
 {
     bind();
-    glBufferSubData(GL_ARRAY_BUFFER, start * sizeof(vertex), size * sizeof(vertex), data);
+    context_->buffer_sub_data(glad_context::gldef_array_buffer(), start * sizeof(vertex), size * sizeof(vertex), data);
 }
 
 void mesh::set_tris(triangle const * data, int size)
 {
     bind();
     ib_size_ = size;
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, ib_size_ * sizeof(triangle), data, GL_DYNAMIC_DRAW);
+    context_->buffer_data(glad_context::gldef_element_array_buffer(), ib_size_ * sizeof(triangle), data, glad_context::gldef_dynamic_draw());
 }
 
 void mesh::set_tris_partial(triangle const * data, int start, int size)
 {
     bind();
-    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, start * sizeof(triangle), size * sizeof(triangle), data);
+    context_->buffer_sub_data(glad_context::gldef_element_array_buffer(), start * sizeof(triangle), size * sizeof(triangle), data);
 }
 
 }

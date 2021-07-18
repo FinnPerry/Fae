@@ -4,6 +4,8 @@
 namespace fae
 {
 
+class glad_context;
+
 class shader
 {
 public:
@@ -14,13 +16,14 @@ public:
     // fragment shader must provide a definition to the following function:
     // vec4 frag();
     // this function should return the final fragment color
-    shader(char const * vert = nullptr, char const * frag = nullptr);
+    shader(glad_context * context, char const * vert = nullptr, char const * frag = nullptr);
 
     ~shader();
 
     void bind();
 
 private:
+    glad_context * context_;
     unsigned int id_;
 };
 

@@ -1,24 +1,27 @@
 #ifndef FAE_RENDERER_GUARD
 #define FAE_RENDERER_GUARD
 
-#include "mesh.hpp"
-
 namespace fae
 {
+
+class glad_context;
+class mesh;
 
 class renderer
 {
 public:
-    renderer();
+    renderer(glad_context * context);
 
     ~renderer() = default;
+    
+    void init();
 
     void clear();
 
     void draw_mesh(mesh const & m);
 
 private:
-    unsigned int vao_;
+    glad_context * context_;
 };
 
 }

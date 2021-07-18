@@ -9,7 +9,7 @@ namespace fae_demo
 class triangle_entity : public fae::entity
 {
 public:
-    triangle_entity() = default;
+    triangle_entity(fae::glad_context * context);
 
     virtual ~triangle_entity() = default;
 
@@ -21,6 +21,7 @@ protected:
     virtual void render(render_args const & args) const override;
 
 private:
+    fae::glad_context * context_;
     std::unique_ptr<fae::shader> shader_;
     std::unique_ptr<fae::mesh> mesh_;
     int window_size_event_;

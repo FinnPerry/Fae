@@ -4,6 +4,8 @@
 namespace fae
 {
 
+class glad_context;
+
 struct vector3
 {
     float x;
@@ -24,7 +26,7 @@ struct triangle
 class mesh
 {
 public:
-    mesh();
+    mesh(glad_context * context);
 
     ~mesh();
 
@@ -43,6 +45,8 @@ public:
     inline int get_ib_size() const { return ib_size_; }
 
 private:
+    glad_context * context_;
+
     unsigned int vao_;
 
     unsigned int vbo_;

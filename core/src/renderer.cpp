@@ -1,15 +1,15 @@
 #include "renderer.hpp"
 
-#include <glad/glad.h>
-
+#include "glad_context.hpp"
 #include "logger.hpp"
+#include "mesh.hpp"
 
 namespace
 {
 
-void gl_error_callback(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, char const * message, void const * user_arg)
+void gl_error_callback(int source, int type, unsigned int id, int severity, int length, char const * message, void const * user_arg)
 {
-    if (severity != GL_DEBUG_SEVERITY_NOTIFICATION)
+    if (severity != fae::glad_context::gldef_debug_severity_notification())
     {
         fae::log(fae::log_type::error, "OpenGL error", id, ':', message);
     }
@@ -20,25 +20,28 @@ void gl_error_callback(GLenum source, GLenum type, unsigned int id, GLenum sever
 namespace fae
 {
 
-renderer::renderer():
-    vao_{0}
+renderer::renderer(glad_context * context):
+    context_{context}
 {
-    auto callback{reinterpret_cast<GLDEBUGPROC>(gl_error_callback)};
-    glDebugMessageCallback(callback, nullptr);
+}
 
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
+void renderer::init()
+{
+    context_->debug_message_callback(gl_error_callback, nullptr);
+
+    context_->enable(glad_context::gldef_depth_test());
+    context_->depth_func(glad_context::gldef_less());
 }
 
 void renderer::clear()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    context_->clear(glad_context::gldef_color_buffer_bit() | glad_context::gldef_depth_buffer_bit());
 }
 
 void renderer::draw_mesh(mesh const & m)
 {
     m.bind();
-    glDrawElements(GL_TRIANGLES, 3 * m.get_ib_size(), GL_UNSIGNED_INT, nullptr);
+    context_->draw_elements(glad_context::gldef_triangles(), 3 * m.get_ib_size(), glad_context::gldef_unsigned_int(), nullptr);
 }
 
 }
