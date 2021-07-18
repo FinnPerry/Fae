@@ -7,6 +7,26 @@
 namespace fae
 {
 
+int glad_context::glenum_array_buffer()
+{
+    return GL_ARRAY_BUFFER;
+}
+
+int glad_context::glenum_float()
+{
+    return GL_FLOAT;
+}
+
+int glad_context::glenum_element_array_buffer()
+{
+    return GL_ELEMENT_ARRAY_BUFFER;
+}
+
+int glad_context::glenum_dynamic_draw()
+{
+    return GL_DYNAMIC_DRAW;
+}
+
 void glad_context::gen_vertex_arrays(int n, unsigned int * arrays)
 {
     glGenVertexArrays(n, arrays);
@@ -17,14 +37,14 @@ void glad_context::gen_buffers(int n, unsigned int * buffers)
     glGenBuffers(n, buffers);
 }
 
-void glad_context::bind_buffer(gl_enum target, unsigned int buffer)
+void glad_context::bind_buffer(int target, unsigned int buffer)
 {
-    glBindBuffer(convert_enum(target), buffer);
+    glBindBuffer(target, buffer);
 }
 
-void glad_context::vertex_attrib_pointer(unsigned int index, int size, gl_enum type, bool normalized, int stride, void const * pointer)
+void glad_context::vertex_attrib_pointer(unsigned int index, int size, int type, bool normalized, int stride, void const * pointer)
 {
-    glVertexAttribPointer(index, size, convert_enum(type), normalized, stride, pointer);
+    glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 }
 
 void glad_context::enable_vertex_attrib_array(unsigned int index)
@@ -47,41 +67,14 @@ void glad_context::bind_vertex_array(unsigned int array)
     glBindVertexArray(array);
 }
 
-void glad_context::buffer_data(gl_enum target, long size, void const * data, gl_enum usage)
+void glad_context::buffer_data(int target, long size, void const * data, int usage)
 {
-    glBufferData(convert_enum(target), size, data, convert_enum(usage));
+    glBufferData(target, size, data, usage);
 }
 
-void glad_context::buffer_sub_data(gl_enum target, long offset, long size, void const * data)
+void glad_context::buffer_sub_data(int target, long offset, long size, void const * data)
 {
-    glBufferSubData(convert_enum(target), offset, size, data);
-}
-
-int glad_context::convert_enum(gl_enum e)
-{
-    switch (e)
-    {
-        case gl_array_buffer:
-        {
-            return GL_ARRAY_BUFFER;
-        }
-        case gl_element_array_buffer:
-        {
-            return GL_ELEMENT_ARRAY_BUFFER;
-        }
-        case gl_float:
-        {
-            return GL_FLOAT;
-        }
-        case gl_dynamic_draw:
-        {
-            return GL_DYNAMIC_DRAW;
-        }
-        default:
-        {
-            throw std::invalid_argument{"Unsupported gl_enum."};
-        }
-    }
+    glBufferSubData(target, offset, size, data);
 }
 
 }
