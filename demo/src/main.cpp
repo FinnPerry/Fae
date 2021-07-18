@@ -11,7 +11,7 @@ int main()
     // create objects
     fae::window win{1280, 720, "fae demo"};
     fae::glad_context context;
-    fae::renderer ren;
+    fae::renderer ren{&context};
 
     // create entities
     fae::entity root;

@@ -7,24 +7,59 @@
 namespace fae
 {
 
-int glad_context::glenum_array_buffer()
+int glad_context::gldef_array_buffer()
 {
     return GL_ARRAY_BUFFER;
 }
 
-int glad_context::glenum_float()
+int glad_context::gldef_float()
 {
     return GL_FLOAT;
 }
 
-int glad_context::glenum_element_array_buffer()
+int glad_context::gldef_element_array_buffer()
 {
     return GL_ELEMENT_ARRAY_BUFFER;
 }
 
-int glad_context::glenum_dynamic_draw()
+int glad_context::gldef_dynamic_draw()
 {
     return GL_DYNAMIC_DRAW;
+}
+
+int glad_context::gldef_debug_severity_notification()
+{
+    return GL_DEBUG_SEVERITY_NOTIFICATION;
+}
+
+int glad_context::gldef_depth_test()
+{
+    return GL_DEPTH_TEST;
+}
+
+int glad_context::gldef_less()
+{
+    return GL_LESS;
+}
+
+int glad_context::gldef_color_buffer_bit()
+{
+    return GL_COLOR_BUFFER_BIT;
+}
+
+int glad_context::gldef_depth_buffer_bit()
+{
+    return GL_DEPTH_BUFFER_BIT;
+}
+
+int glad_context::gldef_triangles()
+{
+    return GL_TRIANGLES;
+}
+
+int glad_context::gldef_unsigned_int()
+{
+    return GL_UNSIGNED_INT;
 }
 
 void glad_context::gen_vertex_arrays(int n, unsigned int * arrays)
@@ -75,6 +110,32 @@ void glad_context::buffer_data(int target, long size, void const * data, int usa
 void glad_context::buffer_sub_data(int target, long offset, long size, void const * data)
 {
     glBufferSubData(target, offset, size, data);
+}
+
+void glad_context::debug_message_callback(debug_proc callback, void const * user_param)
+{
+    auto ptr{reinterpret_cast<GLDEBUGPROC>(callback)};
+    glDebugMessageCallback(ptr, user_param);
+}
+
+void glad_context::enable(int cap)
+{
+    glEnable(cap);
+}
+
+void glad_context::depth_func(int func)
+{
+    glDepthFunc(func);
+}
+
+void glad_context::clear(int mask)
+{
+    glClear(mask);
+}
+
+void glad_context::draw_elements(int mode, int count, int type, void const * indices)
+{
+    glDrawElements(mode, count, type, indices);
 }
 
 }
