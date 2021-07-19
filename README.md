@@ -1,5 +1,8 @@
 # fae
 
+![build-linux](https://github.com/FinnPerry/fae/actions/workflows/build-linux.yml/badge.svg)
+![build-windows](https://github.com/FinnPerry/fae/actions/workflows/build-windows.yml/badge.svg)
+
 ## Build instructions:
 
 ### Linux:
