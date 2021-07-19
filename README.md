@@ -5,11 +5,10 @@
 ### Linux:
 
 - Install dependencies:
-    - `sudo apt install -y cmake build-essential g++ ninja`
-    - glfw3
-        - Note that the cmake scripts assume glfw has been installed using `make install`
+    - fae dependencies: `sudo apt install -y cmake g++ ninja`
+    - glfw dependencies: `sudo apt install -y xorg-dev`
 - Build fae:
-    - Navigate to the fae/scripts/linux/ folder
+    - cd into the fae/scripts/linux/ folder
     - Run the following scripts to build and run the project:
         - `./clean` to delete build files
         - `./configure` to generate build scripts
@@ -23,14 +22,13 @@
 
 - Install dependencies:
     - Cmake
-    - Visual Studio
+    - Visual Studio (with the c++ module)
     - Ninja
-    - glfw3
-        - Note that the cmake scripts assume glfw has been installed using `cmake --install`
 - Build fae:
-    - Open Visual Studio Native Tools cmd (x86 or x64 depending on what glfw3 version you have)
-    - Navigate to the fae\scripts\windows\ folder
-    - The following scripts can be used to build the project:
+    - Open Visual Studio Native Tools cmd
+        - It should come up by searching "Native Tools" in Windows
+    - cd into the fae\scripts\windows\ folder
+    - Run the following scripts to build and run the project:
         - `call clean.bat` to delete build files
         - `call configure.bat` to generate build scripts
         - `call build.bat` to compile
