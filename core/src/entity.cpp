@@ -4,29 +4,29 @@ namespace fae
 {
 
 entity::entity():
-    parent_{nullptr},
-    children_{}
+    m_parent{nullptr},
+    m_children{}
 {
 }
 
 void entity::set_parent(entity * parent)
 {
-    if (parent_)
+    if (m_parent)
     {
-        auto i{std::find(parent_->children_.begin(), parent_->children_.end(), this)};
-        parent_->children_.erase(i);
+        auto i{std::find(m_parent->m_children.begin(), m_parent->m_children.end(), this)};
+        m_parent->m_children.erase(i);
     }
-    parent_ = parent;
-    if (parent_)
+    m_parent = parent;
+    if (m_parent)
     {
-        parent_->children_.push_back(this);
+        m_parent->m_children.push_back(this);
     }
 }
 
 void entity::load_rec(update_args const & args)
 {
     load(args);
-    for (auto i : children_)
+    for (auto i : m_children)
     {
         i->load_rec(args);
     }
@@ -34,7 +34,7 @@ void entity::load_rec(update_args const & args)
 
 void entity::unload_rec(update_args const & args)
 {
-    for (auto i : children_)
+    for (auto i : m_children)
     {
         i->unload_rec(args);
     }
@@ -44,7 +44,7 @@ void entity::unload_rec(update_args const & args)
 void entity::update_rec(update_args const & args)
 {
     update(args);
-    for (auto i : children_)
+    for (auto i : m_children)
     {
         i->update_rec(args);
     }
@@ -53,7 +53,7 @@ void entity::update_rec(update_args const & args)
 void entity::render_rec(render_args const & args) const
 {
     render(args);
-    for (auto i : children_)
+    for (auto i : m_children)
     {
         i->render_rec(args);
     }

@@ -29,7 +29,7 @@ public:
     virtual ~entity() = default;
 
     inline std::vector<entity *> const & get_children() const
-    { return children_; }
+    { return m_children; }
 
     void set_parent(entity * parent);
 
@@ -51,8 +51,8 @@ protected:
     virtual void render(render_args const & args) const {}
 
 private:
-    entity * parent_;
-    std::vector<entity *> children_;
+    entity * m_parent;
+    std::vector<entity *> m_children;
 };
 
 }
