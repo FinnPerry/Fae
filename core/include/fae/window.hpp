@@ -33,7 +33,7 @@ public:
     void update_screen();
     
     inline glad_context * get_context() const
-    { return context_; }
+    { return m_gl_context; }
 
     event<> on_close;
 
@@ -46,13 +46,13 @@ private:
 
     void terminate_glfw();
 
-    static int instance_count_;
+    static int m_instance_count;
 
-    glad_context * context_;
-    win_ptr window_;
-    int width_;
-    int height_;
-    std::string title_;
+    glad_context * m_gl_context;
+    win_ptr m_window;
+    int m_width;
+    int m_height;
+    std::string m_title;
 };
 
 }

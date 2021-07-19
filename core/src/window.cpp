@@ -18,13 +18,13 @@ void glfw_error_callback(int error, char const * message)
     fae::log(fae::log_type::error, "GLFW error", error, ':', message);
 }
 
-void window_close_callback(GLFWwindow * glfw_win)
+void m_windowclose_callback(GLFWwindow * glfw_win)
 {
     auto window{get_user_ptr(glfw_win)};
     window->on_close();
 }
 
-void window_resize_callback(GLFWwindow * glfw_win, int width, int height)
+void m_windowresize_callback(GLFWwindow * glfw_win, int width, int height)
 {
     auto window{get_user_ptr(glfw_win)};
     window->get_context()->viewport(0, 0, width, height);
@@ -36,23 +36,23 @@ void window_resize_callback(GLFWwindow * glfw_win, int width, int height)
 namespace fae
 {
 
-int window::instance_count_{0};
+int window::m_instance_count{0};
 
 window::window(glad_context * context, int width, int height, std::string title):
     on_close{},
     on_resize{},
-    context_{context},
-    window_{nullptr, glfwDestroyWindow},
-    width_{width},
-    height_{height},
-    title_{std::move(title)}
+    m_gl_context{context},
+    m_window{nullptr, glfwDestroyWindow},
+    m_width{width},
+    m_height{height},
+    m_title{std::move(title)}
 {
 }
 
 window::~window()
 {
     close();
-    log("Destroyed window", '"' + title_ + "\".");
+    log("Destroyed window", '"' + m_title + "\".");
 }
 
 void window::open()
@@ -64,17 +64,17 @@ void window::open()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
-    window_.reset(glfwCreateWindow(width_, height_, title_.c_str(), nullptr, nullptr));
-    log("Created window", '"' + title_ + "\".");
+    m_window.reset(glfwCreateWindow(m_width, m_height, m_title.c_str(), nullptr, nullptr));
+    log("Created window", '"' + m_title + "\".");
 
-    glfwSetWindowUserPointer(window_.get(), this);
-    glfwSetWindowCloseCallback(window_.get(), window_close_callback);
-    glfwSetWindowSizeCallback(window_.get(), window_resize_callback);
+    glfwSetWindowUserPointer(m_window.get(), this);
+    glfwSetWindowCloseCallback(m_window.get(), m_windowclose_callback);
+    glfwSetWindowSizeCallback(m_window.get(), m_windowresize_callback);
 }
 
 void window::close()
 {
-    window_.reset();
+    m_window.reset();
     terminate_glfw();
 }
 
@@ -85,27 +85,27 @@ void window::update()
 
 bool window::should_close()
 {
-    return glfwWindowShouldClose(window_.get());
+    return glfwWindowShouldClose(m_window.get());
 }
 
 void window::bind()
 {
-    glfwMakeContextCurrent(window_.get());
-    context_->load_gl_loader(reinterpret_cast<void(*)(char const *)>(glfwGetProcAddress));
-    log("Initialized OpenGL context for window", '"' + title_ + "\".");
-    log("OpenGL version:", context_->get_string(glad_context::gldef_version()));
-    log("OpenGL renderer:", context_->get_string(glad_context::gldef_renderer()));
+    glfwMakeContextCurrent(m_window.get());
+    m_gl_context->load_gl_loader(reinterpret_cast<void(*)(char const *)>(glfwGetProcAddress));
+    log("Initialized OpenGL context for window", '"' + m_title + "\".");
+    log("OpenGL version:", m_gl_context->get_string(glad_context::gldef_version()));
+    log("OpenGL renderer:", m_gl_context->get_string(glad_context::gldef_renderer()));
 }
 
 void window::update_screen()
 {
-    glfwSwapBuffers(window_.get());
+    glfwSwapBuffers(m_window.get());
 }
 
 void window::init_glfw()
 {
-    ++instance_count_;
-    if (instance_count_ == 1)
+    ++m_instance_count;
+    if (m_instance_count == 1)
     {
         glfwSetErrorCallback(glfw_error_callback);
         glfwInit();
@@ -115,8 +115,8 @@ void window::init_glfw()
 
 void window::terminate_glfw()
 {
-    --instance_count_;
-    if (instance_count_ == 0)
+    --m_instance_count;
+    if (m_instance_count == 0)
     {
         glfwTerminate();
         log("Terminated GLFW.");
