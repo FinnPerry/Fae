@@ -23,8 +23,8 @@ public:
     void bind();
 
 private:
-    glad_context * context_;
-    unsigned int id_;
+    glad_context * m_gl_context;
+    unsigned int m_id;
 };
 
 }

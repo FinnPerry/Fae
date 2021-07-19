@@ -55,8 +55,8 @@ namespace fae
 {
 
 shader::shader(glad_context * context, char const * vert, char const * frag):
-    context_{context},
-    id_{0}
+    m_gl_context{context},
+    m_id{0}
 {
     if (!vert)
     {
@@ -64,9 +64,9 @@ shader::shader(glad_context * context, char const * vert, char const * frag):
     }
     auto full_vert{vert_start + vert + vert_end};
     auto vert_ptr{full_vert.c_str()};
-    auto vs{context_->create_shader(glad_context::gldef_vertex_shader())};
-    context_->shader_source(vs, 1, &vert_ptr, nullptr);
-    context_->compile_shader(vs);
+    auto vs{m_gl_context->create_shader(glad_context::gldef_vertex_shader())};
+    m_gl_context->shader_source(vs, 1, &vert_ptr, nullptr);
+    m_gl_context->compile_shader(vs);
 
     if (!frag)
     {
@@ -74,27 +74,27 @@ shader::shader(glad_context * context, char const * vert, char const * frag):
     }
     auto full_frag{frag_start + frag + frag_end};
     auto frag_ptr{full_frag.c_str()};
-    auto fs{context_->create_shader(glad_context::gldef_fragment_shader())};
-    context_->shader_source(fs, 1, &frag_ptr, nullptr);
-    context_->compile_shader(fs);
+    auto fs{m_gl_context->create_shader(glad_context::gldef_fragment_shader())};
+    m_gl_context->shader_source(fs, 1, &frag_ptr, nullptr);
+    m_gl_context->compile_shader(fs);
 
-    id_ = context_->create_program();
-    context_->attach_shader(id_, vs);
-    context_->attach_shader(id_, fs);
-    context_->link_program(id_);
+    m_id = m_gl_context->create_program();
+    m_gl_context->attach_shader(m_id, vs);
+    m_gl_context->attach_shader(m_id, fs);
+    m_gl_context->link_program(m_id);
 
-    context_->delete_shader(fs);
-    context_->delete_shader(vs);
+    m_gl_context->delete_shader(fs);
+    m_gl_context->delete_shader(vs);
 }
 
 shader::~shader()
 {
-    context_->delete_program(id_);
+    m_gl_context->delete_program(m_id);
 }
 
 void shader::bind()
 {
-    context_->use_program(id_);
+    m_gl_context->use_program(m_id);
 }
 
 }
