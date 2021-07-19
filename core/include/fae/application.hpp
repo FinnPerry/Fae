@@ -18,9 +18,9 @@ public:
     void run();
 
 private:
-    window * win_;
-    renderer * ren_;
-    entity * root_;
+    window * m_win;
+    renderer * m_ren;
+    entity * m_root;
 };
 
 }

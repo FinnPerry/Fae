@@ -9,9 +9,9 @@ namespace fae
 {
 
 application::application(window * win, renderer * ren, entity * root):
-    win_{win},
-    ren_{ren},
-    root_{root}
+    m_win{win},
+    m_ren{ren},
+    m_root{root}
 {
 }
 
@@ -21,34 +21,34 @@ application::~application()
 
 void application::run()
 {
-    win_->open();
-    win_->bind();
-    ren_->init();
+    m_win->open();
+    m_win->bind();
+    m_ren->init();
 
     entity::update_args u_args
     {
-        win_,
-        root_
+        m_win,
+        m_root
     };
 
     entity::render_args r_args
     {
-        ren_
+        m_ren
     };
 
-    root_->load_rec(u_args);
-    while (!win_->should_close())
+    m_root->load_rec(u_args);
+    while (!m_win->should_close())
     {
-        win_->update();
-        root_->update_rec(u_args);
+        m_win->update();
+        m_root->update_rec(u_args);
 
-        ren_->clear();
-        root_->render_rec(r_args);
-        win_->update_screen();
+        m_ren->clear();
+        m_root->render_rec(r_args);
+        m_win->update_screen();
     }
-    root_->unload_rec(u_args);
+    m_root->unload_rec(u_args);
 
-    win_->close();
+    m_win->close();
 }
 
 }
