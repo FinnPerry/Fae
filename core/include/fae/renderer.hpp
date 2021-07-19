@@ -21,7 +21,7 @@ public:
     void draw_mesh(mesh const & m);
 
 private:
-    glad_context * context_;
+    glad_context * m_gl_context;
 };
 
 }

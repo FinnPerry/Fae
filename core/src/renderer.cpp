@@ -21,27 +21,27 @@ namespace fae
 {
 
 renderer::renderer(glad_context * context):
-    context_{context}
+    m_gl_context{context}
 {
 }
 
 void renderer::init()
 {
-    context_->debug_message_callback(gl_error_callback, nullptr);
+    m_gl_context->debug_message_callback(gl_error_callback, nullptr);
 
-    context_->enable(glad_context::gldef_depth_test());
-    context_->depth_func(glad_context::gldef_less());
+    m_gl_context->enable(glad_context::gldef_depth_test());
+    m_gl_context->depth_func(glad_context::gldef_less());
 }
 
 void renderer::clear()
 {
-    context_->clear(glad_context::gldef_color_buffer_bit() | glad_context::gldef_depth_buffer_bit());
+    m_gl_context->clear(glad_context::gldef_color_buffer_bit() | glad_context::gldef_depth_buffer_bit());
 }
 
 void renderer::draw_mesh(mesh const & m)
 {
     m.bind();
-    context_->draw_elements(glad_context::gldef_triangles(), 3 * m.get_ib_size(), glad_context::gldef_unsigned_int(), nullptr);
+    m_gl_context->draw_elements(glad_context::gldef_triangles(), 3 * m.get_ib_size(), glad_context::gldef_unsigned_int(), nullptr);
 }
 
 }
