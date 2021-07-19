@@ -1,3 +1,6 @@
 [submodule "external/cppunit/cppunit"]
 	path = external/cppunit/cppunit
 	url = https://github.com/cppunit/cppunit.git
+[submodule "external/glfw"]
+	path = external/glfw
+	url = https://github.com/glfw/glfw.git
