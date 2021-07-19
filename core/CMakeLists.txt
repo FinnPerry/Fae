@@ -19,10 +19,5 @@ target_include_directories(fae-core PRIVATE ../external/glad/include/)
 target_link_libraries(fae-core PRIVATE glad)
 
 # glfw
-if (WIN32)
-    target_include_directories(fae-core PRIVATE "C:/Program Files (x86)/GLFW/include/")
-    target_link_libraries(fae-core PRIVATE "C:/Program Files (x86)/GLFW/lib/glfw3.lib")
-else()
-    find_package(glfw3 REQUIRED)
-    target_link_libraries(fae-core PRIVATE glfw3 dl pthread)
-endif()
+target_include_directories(fae-core PRIVATE ../external/glfw/include/)
+target_link_libraries(fae-core PRIVATE glfw)
