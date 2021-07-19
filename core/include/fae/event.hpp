@@ -26,14 +26,14 @@ public:
 private:
     int next_id();
 
-    std::unordered_map<int, callback> listners_;
-    int id_counter_;
+    std::unordered_map<int, callback> m_listners;
+    int m_id_counter;
 };
 
 template<class ... arg_types>
 void event<arg_types...>::operator ()(arg_types ... args)
 {
-    for (auto i{listners_.begin()}; i != listners_.end(); ++i)
+    for (auto i{m_listners.begin()}; i != m_listners.end(); ++i)
     {
         i->second(args...);
     }
@@ -42,17 +42,17 @@ void event<arg_types...>::operator ()(arg_types ... args)
 template<class ... arg_types>
 int event<arg_types...>::add_callback(callback func)
 {
-    listners_[next_id()] = func;
-    return id_counter_;
+    m_listners[next_id()] = func;
+    return m_id_counter;
 }
 
 template<class ... arg_types>
 void event<arg_types...>::remove_callback(int id)
 {
-    auto i{listners_.find(id)};
-    if (i != listners_.end())
+    auto i{m_listners.find(id)};
+    if (i != m_listners.end())
     {
-        listners_.erase(i);
+        m_listners.erase(i);
     }
 }
 
@@ -61,9 +61,9 @@ int event<arg_types...>::next_id()
 {
     do
     {
-        ++id_counter_;
-    } while (listners_.contains(id_counter_));
-    return id_counter_;
+        ++m_id_counter;
+    } while (m_listners.contains(m_id_counter));
+    return m_id_counter;
 }
 
 }
