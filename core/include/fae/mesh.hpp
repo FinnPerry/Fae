@@ -40,20 +40,20 @@ public:
 
     void set_tris_partial(triangle const * data, int start, int size);
 
-    inline int get_vb_size() const { return vb_size_; }
+    inline int get_vb_size() const { return m_vb_size; }
 
-    inline int get_ib_size() const { return ib_size_; }
+    inline int get_ib_size() const { return m_ib_size; }
 
 private:
-    glad_context * context_;
+    glad_context * m_gl_context;
 
-    unsigned int vao_;
+    unsigned int m_vao;
 
-    unsigned int vbo_;
-    int vb_size_;
+    unsigned int m_vbo;
+    int m_vb_size;
 
-    unsigned int ibo_;
-    int ib_size_;
+    unsigned int m_ibo;
+    int m_ib_size;
 };
 
 }
